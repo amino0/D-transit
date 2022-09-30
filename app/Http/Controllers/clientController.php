@@ -26,4 +26,9 @@ class clientController extends Controller
     {
         return view('client.newclient');
     }
+    public function addclient()
+    {
+
+        return  redirect('/clients');
+    }
 }
