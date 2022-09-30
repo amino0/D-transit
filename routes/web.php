@@ -32,6 +32,9 @@ Route::post('/devis/new/', [homecontroller::class, 'adddevis'])->name('adddevis'
 Route::post('/ajouter/article/', [homecontroller::class, 'addarticle'])->name('addarticle');
 Route::post('/supprimer/article', [homecontroller::class, 'deletearticle'])->name('deletearticle');
 Route::post('/confirmer/panier', [homecontroller::class, 'panierenv'])->name('panierenv');
+Route::get('/devis/modifier/{id}', [homecontroller::class, 'edit_devis'])->name('modifier_devis');
+Route::post('/devis/edit', [homecontroller::class, 'edit_devis_ac'])->name('modifier_devis_ac');
+Route::get('/soumettre/devis/{id}', [homecontroller::class, 'soummetre_devis']);
 
 /*
 Route::get('/clients', [clientController::class, 'index'])->name('allclient');

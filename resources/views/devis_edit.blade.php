@@ -4,20 +4,32 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - Custom Styled DataTables</title>
+    <title>CORK Admin Template - Starter Kit - Blank Page</title>
     <link rel="icon" type="image/x-icon" href="{{asset('template/assets/img/favicon.ico')}}"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="{{asset('template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('template/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="{{asset('template/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
 
-    <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
-    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/datatables.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('template/assets/css/forms/theme-checkbox-radio.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/dt-global_style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/custom_dt_custom.css')}}">
-    <!-- END PAGE LEVEL CUSTOM STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+
+    <style>
+        /*
+            The below code is for DEMO purpose --- Use it if you are using this demo otherwise Remove it
+        */
+        /*.navbar .navbar-item.navbar-dropdown {
+            margin-left: auto;
+        }*/
+        .layout-px-spacing {
+            min-height: calc(100vh - 184px)!important;
+        }
+
+    </style>
+
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    
 </head>
 <body class="sidebar-noneoverflow">
     
@@ -287,95 +299,67 @@
             </nav>
         </div>
         <!--  END TOPBAR  -->
-
+        
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
 
-                <div class="row layout-top-spacing layout-spacing">
-                    <div class="col-lg-12">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-header">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Liste des devis  </h4>
+
+                <!-- CONTENT AREA -->
+                
+
+                <div class="row layout-top-spacing">
+                    
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
+                        <div class="widget-content-area br-4">
+                            <div class="widget-one">
+                                @foreach ($devis as $row)
+
+                                <h6>Modifier le Devis {{$row->id}} cree le {{$row->created_at}} </h6>
+                                    <br>
+                                       <input type="hidden" name="idevis" value="{{$row->id}}"> 
+                                    
+                                <form method="post" action="{{url('/devis/edit/')}}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="t-text">Nom du fourniseur</label>
+                                        <input id="t-text" type="text" name="nom"  value="{{$row->nom_fournisseur}}" class="form-control" required>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="widget-content widget-content-area">
-                                <a href="{{url("/devis/nouveau/")}}" class="btn btn-outline-info"  style="float: right" >Ajouter un devis</a>
+                                    
+                                    <div class="form-group">
+                                        <label for="n-text">Prix souhaite</label>
+                                        <input id="n-text" type="text" name="prix" value="{{$row->prix}}" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="a-text">Type de marchandise</label>
+                                        <input id="a-text" type="text" name="addresse" placeholder="Type de marchandise ..." class="form-control" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="m-text">Pays de provenamce</label>
+                                        <input id="m-text" type="text" name="mail" placeholder="Pays de provenance ..." class="form-control" disabled>
+                                    </div>
+                                    
+                                    <div class="form-group mb-4">
+                                        <label for="exampleFormControlTextarea1">Description de la marchandise</label>
+                                        <textarea class="form-control" name="contact" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
+                                    </div>
 
-                                <div class="table-responsive mb-4">
-                                    <table id="style-2" class="table style-2  table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th class="checkbox-column"> Record Id </th>
-                                                <th>Fournisseur  </th>
-                                                <th>Agent </th>
-                                                <th>status</th>
-                                                <th>Cree le</th>
-                                                <th>Modifier le</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($devis as $row)
-                                                
-                                            
-                                            <tr>
-                                                <td class="checkbox-column"> {{$row->id}} </td>
-                                                <td> {{$row->nom_fournisseur}} </td>
-                                                <td>{{$row->agent}}</td>
-                                                <td>
-                                                    @if ($row->status == 1 )
-                                                    <span class=' shadow-none badge outline-badge-warning'>En attente des articles</span>
-                                                    @elseif ($row->status == 2 )
-                                                   
-                                                    <span class=' shadow-none badge outline-badge-warning'>article soumis !</span>
-                                                    @else 
+                                    <input type="submit" name="txt" class="mt-4 btn btn-primary" value="Modifier">
 
-                                                    <span class=' shadow-none badge outline-badge-primary'>envoyer</span>
-                                                    @endif
-                                                    </td>
-                                               
-                                                <td>{{$row->created_at}}</td>
-                                                <td> <b> {{$row->updated_at}} </b></td>
-                                                
-                                                    <td class="text-center">
-                                                        
-                                                        <div class="dropdown custom-dropdown">
-                                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                            </a>
+                                </form>
+                                @endforeach
 
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                                               @if ($row->status == 1)
-                                                               <a class="dropdown-item" href="{{url("/devis/$row->id")}}">Ajouter les articles</a>
-                                                               @endif
-                                                               @if ($row->status != 3)
-                                                                <a class="dropdown-item" href="{{url("/devis/modifier/$row->id")}}">Modifier</a>
-                                                               @endif
-                                                                @if ($row->status != 3)
-                                                                <a class="dropdown-item" href="{{url("/soumettre/devis/$row->id")}}">Soumettre</a>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-
-                                                    </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                
-               
-                </div>
-        <div class="footer-wrapper">
+
+                <!-- CONTENT AREA -->
+
+            </div>
+            <div class="footer-wrapper">
                 <div class="footer-section f-section-1">
                     <p class="">Copyright © 2020 <a target="_blank" href="https://designreset.com">DesignReset</a>, All rights reserved.</p>
                 </div>
@@ -388,9 +372,7 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
-    
-    
-    
+
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="{{asset('template/assets/js/libs/jquery-3.1.1.min.js')}}"></script>
     <script src="{{asset('template/bootstrap/js/popper.min.js')}}"></script>
@@ -406,69 +388,8 @@
     <script src="{{asset('template/assets/js/custom.js')}}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="{{asset('template/plugins/table/datatable/datatables.js')}}"></script>
-    <script>
-        // var e;
-        c1 = $('#style-1').DataTable({
-            headerCallback:function(e, a, t, n, s) {
-                e.getElementsByTagName("th")[0].innerHTML='<label class="new-control new-checkbox checkbox-outline-primary m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
-            },
-            columnDefs:[ {
-                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
-                    return'<label class="new-control new-checkbox checkbox-outline-primary  m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
-                }
-            }],
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
-            },
-            "lengthMenu": [5, 10, 20, 50],
-            "pageLength": 5
-        });
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
-        multiCheck(c1);
-
-        c2 = $('#style-2').DataTable({
-            headerCallback:function(e, a, t, n, s) {
-                e.getElementsByTagName("th")[0].innerHTML='<label class="new-control new-checkbox checkbox-outline-primary m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
-            },
-            columnDefs:[ {
-                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
-                    return'<label class="new-control new-checkbox checkbox-outline-primary  m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
-                }
-            }],
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
-            },
-            "lengthMenu": [5, 10, 20, 50],
-            "pageLength": 5 
-        });
-
-        multiCheck(c2);
-
-        c3 = $('#style-3').DataTable({
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
-            },
-            "stripeClasses": [],
-            "lengthMenu": [5, 10, 20, 50],
-            "pageLength": 5
-        });
-
-        multiCheck(c3);
-    </script>
-    <!-- END PAGE LEVEL SCRIPTS -->  
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 use Illuminate\Http\Request;
 
@@ -40,6 +41,29 @@ class homecontroller extends Controller
         ]);
 
         return redirect('/devis');
+    }
+    // modifier devis 
+    public function edit_devis($id)
+    {
+        $devis =  DB::select("SELECT * FROM `devis` WHERE id = $id and `deleted_at` is null ");
+        return view('devis_edit', compact('devis'));
+    }
+    public function edit_devis_ac($id)
+    {
+        $id = request('idevis');
+        $nom = request('nom');
+        $prix = request('prix');
+        $datemodif = now();
+        DB::table('paniers')
+            ->where('id', $id)
+            ->update([
+                'nom_fournisseur' => $nom,
+                'prix' => $prix,
+                'updated_at' => $datemodif,
+            ]);
+
+
+        return redirect("/devis/$id");
     }
     public function add_article_devis($id)
     {
@@ -87,5 +111,19 @@ class homecontroller extends Controller
             ->where('id', $id)
             ->update(['status' => '2']);
         return redirect("/devis");
+    }
+    public function soummetre_devis(Request $request, $id)
+    {
+        $devis =  DB::select("SELECT * FROM `devis` WHERE id = $id and `deleted_at` is null ");
+        $panier =  DB::select("SELECT * FROM `paniers` WHERE `paniers`.`id_devis`= $id and `deleted_at` is null ");
+
+        DB::table('devis')
+            ->where('id', $id)
+            ->update(['status' => '3']);
+
+        $pdf = PDF::loadView(('devis_pdf'), compact('devis', 'panier'));
+        return $pdf->download("devis_$id.pdf");
+
+        // return view('devis_pdf', compact('devis', 'panier'));
     }
 }
