@@ -1,6 +1,8 @@
-etape 1 : dossier  
--   Information  du clients 
--   Information de la marchandise 
+etape 1 : devis  
+-   enregistrement du devis  
+-   enregistrement des produits
+- confirmation des produits 
+- soumettre le devis ( envoi mail avec PDF generator ) 
 - ELement Debours   
 - Information Getpass 
 - Vehicule 
