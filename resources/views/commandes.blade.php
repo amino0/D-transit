@@ -4,32 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - Starter Kit - Blank Page</title>
+    <title>CORK Admin Template - Custom Styled DataTables</title>
     <link rel="icon" type="image/x-icon" href="{{asset('template/assets/img/favicon.ico')}}"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="{{asset('template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('template/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
-    <link href="{{asset('template/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-
-    <style>
-        /*
-            The below code is for DEMO purpose --- Use it if you are using this demo otherwise Remove it
-        */
-        /*.navbar .navbar-item.navbar-dropdown {
-            margin-left: auto;
-        }*/
-        .layout-px-spacing {
-            min-height: calc(100vh - 184px)!important;
-        }
-
-    </style>
-
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    
+    <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/datatables.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('template/assets/css/forms/theme-checkbox-radio.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/dt-global_style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/custom_dt_custom.css')}}">
+    <!-- END PAGE LEVEL CUSTOM STYLES -->
 </head>
 <body class="sidebar-noneoverflow">
     
@@ -256,7 +244,7 @@
                        
                     </li>
 
-                    <li class="menu single-menu active ">
+                    <li class="menu single-menu  ">
                         <a href="{{url('/devis')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -265,7 +253,7 @@
                         </a>
                       
                     </li>
-                    <li class="menu single-menu ">
+                    <li class="menu single-menu active">
                         <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -299,63 +287,65 @@
             </nav>
         </div>
         <!--  END TOPBAR  -->
-        
+
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
 
-
-                <!-- CONTENT AREA -->
-                
-
-                <div class="row layout-top-spacing">
-                    
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                        <div class="widget-content-area br-4">
-                            <div class="widget-one">
-
-                                <h6>Creation d'un nouveau Devis </h6>
-                                    <br>
-                                <form method="post" action="{{url('/devis/new/')}}">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="t-text">Nom du fourniseur</label>
-                                        <input id="t-text" type="text" name="nom"  placeholder="nom complet ou accromine" class="form-control" required>
+                <div class="row layout-top-spacing layout-spacing">
+                    <div class="col-lg-12">
+                        <div class="statbox widget box box-shadow">
+                            <div class="widget-header">
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                        <h4>Liste des dossiers </h4>
                                     </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="n-text">Prix souhaite</label>
-                                        <input id="n-text" type="text" name="prix" placeholder="Prix souhaite EN DJF  ..." class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="a-text">Type de marchandise</label>
-                                        <input id="a-text" type="text" name="addresse" placeholder="Type de marchandise ..." class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="m-text">Pays de provenamce</label>
-                                        <input id="m-text" type="text" name="mail" placeholder="Pays de provenance ..." class="form-control" required>
-                                    </div>
-                                    
-                                    <div class="form-group mb-4">
-                                        <label for="exampleFormControlTextarea1">Description de la marchandise</label>
-                                        <textarea class="form-control" name="contact" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                    </div>
-
-                                    <input type="submit" name="txt" class="mt-4 btn btn-primary" value="Enregistrer">
-
-                                </form>
-
+                                </div>
+                            </div>
+                            <div class="widget-content widget-content-area">
+                                <div class="table-responsive mb-4">
+                                    <table id="style-2" class="table style-2  table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="checkbox-column"> Record Id </th>
+                                                <th>Nom fourniseur </th>
+                                                <th>prix convenu</th>
+                                                <th class="text-center">Action</th>
+                                                <th>Cree le</th>
+                                                
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($commade as $row)
+                                                
+                                            
+                                            <tr>
+                                                <td class="checkbox-column"> {{$row->id}} </td>
+                                                <td>{{$row->nom_fourniseur}}</td>
+                                                <td>{{$row->prix_convenu}}</td>
+                                                <td>@if ($row->status == 1 )
+                                                    <span class=' shadow-none badge outline-badge-warning'>En attente des articles</span>
+                                                   
+                                                    @endif</td>
+                                                <td>{{$row->created_at}}</td>
+                                                
+                                                <td class="text-center">
+                                                    <a href="{{url("/commandes/$row->id")}}" class="btn btn-outline-primary"  >Voir</a></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-
-                <!-- CONTENT AREA -->
-
-            </div>
-            <div class="footer-wrapper">
+                
+               
+                </div>
+        <div class="footer-wrapper">
                 <div class="footer-section f-section-1">
                     <p class="">Copyright © 2020 <a target="_blank" href="https://designreset.com">DesignReset</a>, All rights reserved.</p>
                 </div>
@@ -368,7 +358,9 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
-
+    
+    
+    
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="{{asset('template/assets/js/libs/jquery-3.1.1.min.js')}}"></script>
     <script src="{{asset('template/bootstrap/js/popper.min.js')}}"></script>
@@ -384,8 +376,69 @@
     <script src="{{asset('template/assets/js/custom.js')}}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="{{asset('template/plugins/table/datatable/datatables.js')}}"></script>
+    <script>
+        // var e;
+        c1 = $('#style-1').DataTable({
+            headerCallback:function(e, a, t, n, s) {
+                e.getElementsByTagName("th")[0].innerHTML='<label class="new-control new-checkbox checkbox-outline-primary m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+            },
+            columnDefs:[ {
+                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
+                    return'<label class="new-control new-checkbox checkbox-outline-primary  m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+                }
+            }],
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5
+        });
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+        multiCheck(c1);
+
+        c2 = $('#style-2').DataTable({
+            headerCallback:function(e, a, t, n, s) {
+                e.getElementsByTagName("th")[0].innerHTML='<label class="new-control new-checkbox checkbox-outline-primary m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+            },
+            columnDefs:[ {
+                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
+                    return'<label class="new-control new-checkbox checkbox-outline-primary  m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+                }
+            }],
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5 
+        });
+
+        multiCheck(c2);
+
+        c3 = $('#style-3').DataTable({
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5
+        });
+
+        multiCheck(c3);
+    </script>
+    <!-- END PAGE LEVEL SCRIPTS -->  
 </body>
 </html>

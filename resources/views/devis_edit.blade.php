@@ -266,7 +266,7 @@
                       
                     </li>
                     <li class="menu single-menu ">
-                        <a href="{{url('/clients')}}" class="dropdown-toggle">
+                        <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                                 <span>Commandes</span>
@@ -317,34 +317,35 @@
 
                                 <h6>Modifier le Devis {{$row->id}} cree le {{$row->created_at}} </h6>
                                     <br>
-                                       <input type="hidden" name="idevis" value="{{$row->id}}"> 
+                                       
                                     
-                                <form method="post" action="{{url('/devis/edit/')}}">
+                                <form method="post" action="{{url('/devis/edit')}}">
                                     @csrf
+                                    <input type="hidden" name="idevis" value="{{$row->id}}"> 
                                     <div class="form-group">
                                         <label for="t-text">Nom du fourniseur</label>
-                                        <input id="t-text" type="text" name="nom"  value="{{$row->nom_fournisseur}}" class="form-control" required>
+                                        <input id="t-text" type="text" name="nom_fournisseur"  value="{{$row->nom_fournisseur}}" class="form-control" required>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label for="n-text">Prix souhaite</label>
-                                        <input id="n-text" type="text" name="prix" value="{{$row->prix}}" class="form-control" required>
+                                        <input id="n-text" type="text" name="prix_souhaitez" value="{{$row->prix}}" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="a-text">Type de marchandise</label>
-                                        <input id="a-text" type="text" name="addresse" placeholder="Type de marchandise ..." class="form-control" disabled>
+                                        <input id="a-text" type="text"  placeholder="Type de marchandise ..." class="form-control" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="m-text">Pays de provenamce</label>
-                                        <input id="m-text" type="text" name="mail" placeholder="Pays de provenance ..." class="form-control" disabled>
+                                        <input id="m-text" type="text" placeholder="Pays de provenance ..." class="form-control" disabled>
                                     </div>
                                     
                                     <div class="form-group mb-4">
                                         <label for="exampleFormControlTextarea1">Description de la marchandise</label>
-                                        <textarea class="form-control" name="contact" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
                                     </div>
 
-                                    <input type="submit" name="txt" class="mt-4 btn btn-primary" value="Modifier">
+                                    <input type="submit"  class="mt-4 btn btn-primary" value="Modifier">
 
                                 </form>
                                 @endforeach
