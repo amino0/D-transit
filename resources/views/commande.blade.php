@@ -451,24 +451,24 @@
 
                                         <li class="nav-item ml-2 mr-2">
                                             <a class="nav-link mb-2 text-center" id="rounded-pills-icon-settings-tab" data-toggle="pill" href="#rounded-pills-icon-settings" role="tab" aria-controls="rounded-pills-icon-settings" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-archive"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg> Document <br> 
-                                                @php $article = 0; @endphp
-                                                @foreach ($marchandises as $row)
+                                                @php $cntdoc = 0; @endphp
+                                                @foreach ($document as $row)
                                                 @php
-                                                    $article = 1 + $article;
+                                                    $cntdoc = 1 + $cntdoc;
                                                 @endphp
                                             @endforeach
-                                            ({{$article}})</a>
+                                            ({{$cntdoc}})</a>
                                         </li>
                                         <li class="nav-item ml-2 mr-2">
-                                            <a class="nav-link mb-2 text-center" id="rounded-pills-icon-settings-tab" data-toggle="pill" href="#rounded-pills-icon-settings" role="tab" aria-controls="rounded-pills-icon-settings" aria-selected="false">
+                                            <a class="nav-link mb-2 text-center" id="rounded-pills-icon-waybills-tab" data-toggle="pill" href="#rounded-pills-icon-waybills" role="tab" aria-controls="rounded-pills-icon-waybills" aria-selected="false">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> Waybill <br> 
-                                                @php $article = 0; @endphp
-                                                @foreach ($marchandises as $row)
+                                                @php $cntwaybills = 0; @endphp
+                                                @foreach ($waybills as $row)
                                                 @php
-                                                    $article = 1 + $article;
+                                                    $cntwaybills = 1 + $cntwaybills;
                                                 @endphp
                                             @endforeach
-                                            ({{$article}})</a>
+                                            ({{$cntwaybills}})</a>
                                         </li>
                                        
                                     </ul>
@@ -484,19 +484,19 @@
                                                 <thead>
                                                       <tr>
                                                           <th class="text-center">#</th>
-                                                          <th>Matricule</th>
-                                                          <th>Chauffeur</th>
-                                                          <th>Article</th>
+                                                          <th>Intitulé</th>
+                                                          <th>Description</th>
+                                                          <th>Quantite</th>
                                                           <th>Montant</th>
                                                           <th>créé le</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
-                                                    @foreach ($waybills as $row) 
+                                                    @foreach ($marchandises as $row) 
                                                     <tr>
                                                           <td class="text-center">{{$row->id}}</td>
                                                           <td class="text-primary">{{$row->intituler}}</td>
-                                                          <td class="text-primary">{{$row->}}</td>
+                                                          <td class="text-primary">{{$row->description}}</td>
                                                           <td>{{$row->quatite}}</td>
                                                           <td>{{$row->prix_unitaire}}</td>
                                                           
@@ -595,25 +595,29 @@
                                                   </tbody>
                                               </table>
                                         </div>
-                                        <div class="tab-pane fade" id="rounded-pills-icon-settings" role="tabpanel" aria-labelledby="rounded-pills-icon-settings-tab">
+                                        <div class="tab-pane fade" id="rounded-pills-icon-waybills" role="tabpanel" aria-labelledby="rounded-pills-icon-waybills-tab">
                                             <div class="text-right">
                                                 
                                             </div>
                                             <table class="table mb-4">
-                                                <caption>Listes des marchandises </caption>
+                                                <caption>Listes des waybills </caption>
                                                 <thead>
                                                       <tr>
                                                           <th class="text-center">#</th>
-                                                          <th>Intitulé</th>
+                                                          <th>Matricule</th>
+                                                          <th>Chauffeur</th>
+                                                          <th>Article</th>
                                                           <th>Quantite</th>
                                                           <th>Montant</th>
                                                           <th>créé le</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
-                                                    @foreach ($marchandises as $row) 
+                                                    @foreach ($waybills as $row) 
                                                     <tr>
                                                           <td class="text-center">{{$row->id}}</td>
+                                                          <td class="text-primary">{{$row->matricule}}</td>
+                                                          <td class="text-primary">{{$row->matricule}}</td>
                                                           <td class="text-primary">{{$row->intituler}}</td>
                                                           <td>{{$row->quatite}}</td>
                                                           <td>{{$row->prix_unitaire}}</td>
@@ -623,6 +627,7 @@
                                                       @endforeach
                                                   </tbody>
                                               </table>
+                                      
                                         </div>
                                     </div>
 

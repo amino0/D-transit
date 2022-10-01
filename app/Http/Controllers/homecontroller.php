@@ -225,8 +225,8 @@ class homecontroller extends Controller
         $paiements =  DB::select("SELECT * FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null  ");
         $debours =  DB::select("SELECT * FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null  ");
         $document =  DB::select("SELECT * FROM `documents` WHERE `documents`.`id_commande`= $id and `deleted_at` is null  ");
-        $waybills =  DB::select("SELECT * FROM `waybills`,`marchandises` WHERE `waybills`.`id_commande`= $id and `marchandises`.`id` = `waybills`.`id_marchandise`  and `deleted_at` is null  ");
-        $summontant_paye =  DB::select("SELECT  SUM( `montant_paye`) as summontant_paye FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null  ");
+        $waybills =  DB::select("SELECT * FROM `waybills`,`marchandises` WHERE `waybills`.`id_commande` = 11 and `marchandises`.`id` = `waybills`.`id_marchandise` and `waybills`.`deleted_at` is null GROUP BY `waybills`.`id_marchandise`");
+        $summontant_paye =  DB::select("SELECT  SUM( `montant_paye`) as summontant_paye FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null   ");
         return view('commande', compact('commande', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye'));
     }
 }
