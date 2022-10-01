@@ -39,15 +39,16 @@ Route::post('/ajouter/arrete/article/', [homecontroller::class, 'addarticle_ar']
 Route::get('/soumettre/devis/{id}', [homecontroller::class, 'soummetre_devis']);
 Route::get('/telecharger/devis/{id}', [homecontroller::class, 'soummetre_devis']);
 Route::get('/devis/arrete/{id}', [homecontroller::class, 'arrete']);
-Route::post('confirmer/devis', [homecontroller::class, 'commandes']);
+Route::post('/confirmer/devis', [homecontroller::class, 'commandes']);
+Route::post('/confirmer/devis', [homecontroller::class, 'confirmer_devis']);
 
 // commandes 
 Route::get('/commandes', [homecontroller::class, 'commandes']);
+Route::get('/commandes/{id}', [homecontroller::class, 'commande']);
 
 /*
 Route::get('/clients', [clientController::class, 'index'])->name('allclient');
 Route::get('/clients/show/{id}', [clientController::class, 'client']);
-Route::get('/dossiers/show/{id}', [DossierController::class, 'dossier']);
 Route::get('/dossiers/new/{id}', [DossierController::class, 'newdossierclient']);
 Route::get('/dossiers/new', [DossierController::class, 'newdossier']);
 Route::post('/newdossier', [DossierController::class, 'creedossier']);

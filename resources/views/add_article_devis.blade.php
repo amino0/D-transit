@@ -225,7 +225,7 @@
                         <a href="{{url('/devis')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                <span>Devis</span>
+                                <span>Cotation</span>
                             </div>
                         </a>
                       
@@ -281,28 +281,44 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                                     <form id="work-platforms" class="section work-platforms" method="POST" action="{{url('/ajouter/article/')}}">
                                         <div class="info">
+                                        @foreach ($devis as $row)
+                                            
+                                        
+                                            <h3> Cotation <b> N° {{$row->id}} </b> pour le Fournisseur <b> {{$row->nom_fournisseur}} </b> </h3>
+                                            @endforeach
                                             <h5 class="">Choix des produits</h5>
                                             <div class="row">
                                                 <div class="col-md-12 text-right mb-5">
                                                     <button id="add-work-platforms" class="btn btn-primary">Ajouter</button>
                                                 </div>
                                                 <div class="col-md-11 mx-auto">
+                                                    {{ csrf_field() }}
 
                                                     <div class="platform-div">
                                                         <div class="form-group">
-                                                            <label for="platform-title">Intituler de l'article</label>
-                                                            <input type="text" name="intituler"  class="form-control mb-4" id="platform-title" placeholder="Intituler de l'article"  >
-                                                            <div lass="form-group" id="countryList">
-                                                            </div>
-                                                            </div>
-                                                            {{ csrf_field() }}
+                                                            <label for="platform-title">Intitulé de l'article</label>
+                                                            <input type="text" name="intituler"  class="form-control mb-4" id="platform-title" placeholder="Intitulé de l'article"  >
+                                                            
+                                                            
                                                           @foreach ($devis as $row)
                                                              <input type="hidden" name="iddevis" value="{{$row->id}}">
                                                           @endforeach
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="platform-title">Quantite</label>
+                                                            <label for="platform-title">Description de l'article</label>
+                                                            <input type="text" name="description"  class="form-control mb-4" id="platform-title" placeholder="Description de l'article"  >
+                                                            
+                                                            
+                                                         </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="platform-title">Quantité</label>
                                                             <input type="number" class="form-control mb-4" name="quantite" id="platform-title" placeholder="10"  >
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="platform-title">Prix Unitaire souhaité</label>
+                                                            <input type="number" class="form-control mb-4" name="prix" id="platform-title" placeholder="Prix en dollar $"  >
 
                                                         </div>
                                                         
@@ -324,8 +340,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="checkbox-column text-center"> Record Id </th>
-                                                            <th>Nom</th>
+                                                            <th>Article</th>
+                                                            <th>Description</th>
                                                             <th>Quantite</th>
+                                                            <th>P.U </th>
+                                                            <th>Total</th>
                                                             <th class="text-center">Action</th>
                                                         </tr>
                                                     </thead>
@@ -337,14 +356,22 @@
                                                             <td >
                                                                 {{$row->intituler}}
                                                             </td>
+                                                            <td>{{$row->description}}</td>
                                                             <td>{{$row->quantite}}</td>
+                                                            <td>{{$row->prix_souhaite}} $</td>
+                                                            <td>
+                                                                @php
+                                                                    $montant_total = $row->quantite*$row->prix_souhaite;
+                                                                @endphp
+                                                                {{$montant_total}} $</td>
                                                             <td class="text-center">
                                                                 <ul class="table-controls">
                                                                     <li>
                                                                         <form method="POST" action="{{url('/supprimer/article')}}">
                                                                             @csrf
                                                                             <input type="hidden" name="iddevis2" value="{{$row->id_devis}}">
-                                                                 
+                                                                            <input type="hidden" name="idarticle" value="{{$row->id}}">
+
                                                                             <button  class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Supprimer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
 
                                                                         </form>
@@ -373,7 +400,7 @@
                         <div class="as-footer-container">
 
                             <div class="blockui-growl-message">
-                                <i class="flaticon-double-check"></i>&nbsp; Vos produit sont bien enregistrer
+                                <i class="flaticon-double-check"></i>&nbsp; Vos produits sont bien enregistrés
                             </div>
                             <form method="POST" action="{{url('/confirmer/panier')}}">
                                 @csrf
@@ -382,7 +409,7 @@
                                 
                                 <input type="hidden" name="idevis" value="{{$row->id}}">
                                 @endforeach
-                                <button   id="multiple-messages" class="btn btn-primary">Confirmer la Commande</button>
+                                <button   id="multiple-messages" class="btn btn-primary">Valider la cotation</button>
 
                             </form>
 

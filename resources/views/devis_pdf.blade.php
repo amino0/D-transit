@@ -10,33 +10,51 @@
  <div class='row'>
  <div class='col-lg-12" style='margin-top: 15px “>
  <div class='pull-left'>
- <h2>Devis </h2>
- </div>
+    @foreach ($devis as $row)
+                                            
+                                        
+    <h2> Cotation <b> N° {{$row->id}} </b> pour le Fournisseur <b> {{$row->nom_fournisseur}} </b> </h2>
+    @endforeach </div>
  <div class='pull-right'>
- <a class='btn btn-primary' href=''>Download PDF</a>
  </div>
- </div> des mot cordial pour l'envoi du pdf par mail 
- </div><br>
+ <br>
+
 <table class='table table-bordered'>
  <tr>
  <th>Intituler</th>
+ <th>description</th>
  <th>Quantite</th>
- <th>Prix</th>
+ <th>Prix unitaire</th>
+ <th>Total</th>
 
  </tr>
+ @php
+      $t = 0;
+ @endphp
 @foreach ($panier as $user)
  <tr>
  <td>{{ $user->intituler }}</td>
+ <td>{{ $user->description }}</td>
  <td>{{ $user->quantite }}</td>
+ <td>{{ $user->prix_souhaite }}</td>
+ <td>@php
+    $montant_total = $user->quantite*$user->prix_souhaite;
+@endphp {{$montant_total}}</td>
  </tr>
+ @php
+     $t = $t + $user->quantite*$user->prix_souhaite;
+ @endphp
  @endforeach
 <tr>
-    <td></td>
-    <td></td>
-    <td> <b> @foreach ($devis as $row)
-{{$row->prix}}        
-    @endforeach </b> </td>
-</tr>
+
+    <td colspan="4" align="right">
+<b> Montant Total </b>
+     </td>
+<td> @php
+   
+    
+@endphp <b> {{$t}} </b></td>
+    </tr>
  </table>
  </div>
 </body>

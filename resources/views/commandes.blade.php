@@ -248,7 +248,7 @@
                         <a href="{{url('/devis')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                <span>Devis</span>
+                                <span>Cotation</span>
                             </div>
                         </a>
                       
@@ -298,7 +298,7 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Liste des dossiers </h4>
+                                        <h4>Liste des Commandes </h4>
                                     </div>
                                 </div>
                             </div>
@@ -307,11 +307,13 @@
                                     <table id="style-2" class="table style-2  table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="checkbox-column"> Record Id </th>
+                                                <th class="checkbox-column"> Record </th>
+                                                <th>Id commande  </th>
                                                 <th>Nom fourniseur </th>
-                                                <th>prix convenu</th>
-                                                <th class="text-center">Action</th>
-                                                <th>Cree le</th>
+                                                <th>Num Cotation </th>
+                                                <th>Montant total</th>
+                                                <th class="text-center">Statut</th>
+                                                <th>Créée le</th>
                                                 
                                                 <th class="text-center">Action</th>
                                             </tr>
@@ -322,10 +324,14 @@
                                             
                                             <tr>
                                                 <td class="checkbox-column"> {{$row->id}} </td>
+                                                <td>{{$row->id}}</td>
                                                 <td>{{$row->nom_fourniseur}}</td>
-                                                <td>{{$row->prix_convenu}}</td>
+                                                <td>{{$row->id_devis}}</td>
+                                                <td> 
+                                                    {{$row->sumtotal}}
+                                                </td>
                                                 <td>@if ($row->status == 1 )
-                                                    <span class=' shadow-none badge outline-badge-warning'>En attente des articles</span>
+                                                    <span class=' shadow-none badge outline-badge-warning'>En attente </span>
                                                    
                                                     @endif</td>
                                                 <td>{{$row->created_at}}</td>

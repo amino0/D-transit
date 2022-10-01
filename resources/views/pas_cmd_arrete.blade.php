@@ -228,7 +228,7 @@
                         <a href="{{url('/devis')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                <span>Devis</span>
+                                <span>Cotation</span>
                             </div>
                         </a>
                       
@@ -279,62 +279,14 @@
                             <div class="row">
                              
 
-                               
-
-                                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                                    <form id="work-platforms" class="section work-platforms"  method="POST" action="{{url('/confirmer/devis')}}">
-                                        @csrf
-                                        <div class="info">
-                                            <h5 class="">Cloture du devis </h5>
-                                            <div class="row">
-                                                <div class="col-md-12 text-right mb-5">
-                                                    @foreach ($devis as $row)
-                                                    
-                                                
-                                                    <a class="btn btn-info mb-2 mr-2" href="{{url("/telecharger/devis/$row->id")}}">Telecharger le Devis que vous avez retenu <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg></a>
-                                                    @endforeach
-                                                </div>
-                                                <div class="col-md-11 mx-auto">
-                                                
-                                                    <div class="platform-div">
-                                                        <div class="form-group">
-                                                            <label for="platform-title">Dernier devis Arreter </label> <br>
-                                                            <input type="file" name="devis_envoyer"  class="form-control mb-4" id="platform-title" placeholder="Intituler de l'article"  >
-                                                            
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="platform-title">Devis Reçu par le Fournisseur  </label> <br>
-                                                            <input type="file" name="devis_recu"  class="form-control mb-4" id="platform-title" placeholder="Intituler de l'article"  >
-                                                            
-                                                        </div>
-                                                           
-                                                        
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            @foreach ($devis as $row)
-                                                
-                                            
-                                            <input type="hidden" name="idevis" value="{{$row->id}}">
-                                            <input type="hidden" name="nom_fournisseur" value="{{$row->nom_fournisseur}}">
-                                            <input type="hidden" name="prix" value="{{$row->prix}}">
-
-
-                                            @endforeach
-                                            <button   class="btn btn-danger mb-2 mr-2" >Passé à la Commande <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
-            
-                                        </div>
-                                     
-                                           
-                                    </form>
-                                </div>
-
                                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                                     <div id="contact" class="section contact" >
                                         <div class="info">
+                                            @foreach ($devis as $row)
+                                            
+                                        
+                                            <h3> Cotation <b> N° {{$row->id}} </b> pour le Fournisseur <b> {{$row->nom_fournisseur}} </b> </h3>
+                                            @endforeach
                                             @php $cntcontenaires = 0; @endphp
                                             @foreach ($panier as $row)
                                             @php
@@ -351,8 +303,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="checkbox-column text-center"> Record Id </th>
-                                                            <th>Nom</th>
-                                                            <th>Quantite</th>
+                                                            <th>Article</th>
+                                                            <th>Description</th>
+                                                            <th>Quantité</th>
+                                                            <th>Prix</th>
                                                             <th class="text-center">Action</th>
                                                         </tr>
                                                     </thead>
@@ -364,7 +318,9 @@
                                                             <td >
                                                                 {{$row->intituler}}
                                                             </td>
+                                                            <td>{{$row->description}}</td>
                                                             <td>{{$row->quantite}}</td>
+                                                            <td>{{$row->prix_souhaite}} $</td>
                                                             <td class="text-center">
                                                                 <ul class="table-controls">
                                                                     <li>
@@ -388,7 +344,79 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Ajout Article </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="POST" action="{{url('/ajouter/arrete/article/')}}">
+                                                  @csrf
+                                                                <div class="form-group">
+                                                                    <label for="platform-title">Intituler de l'article</label>
+                                                                    <input type="text" name="intituler"  class="form-control mb-4" id="platform-title" placeholder="Intituler de l'article"  >
+                                                                   
+                                                                  @foreach ($devis as $row)
+                                                                     <input type="hidden" name="iddevis" value="{{$row->id}}">
+                                                                  @endforeach
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="platform-title">Quantite</label>
+                                                                    <input type="number" class="form-control mb-4" name="quantite" id="platform-title" placeholder="10"  >
+            
+                                                                </div>
+                                                                
+                                                            
+            
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
+                                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                                            </form>                                
+            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                                    <form id="work-platforms" class="section work-platforms"  method="POST" action="{{url('/confirmer/devis')}}">
+                                        @csrf
+                                        <div class="info">
+                                          
+                                            <div class="row">
+                                                <div class="col-md-12 text-right mb-5">
+                                                    
+                                                </div>
+                                                <div class="col-md-11 mx-auto">
+                                                
+                                                    <div class="platform-div">
+                                                        
+
+                                                        <div class="form-group">
+                                                            <label for="platform-title">Devis Reçu par le Fournisseur  </label> <br>
+                                                            <input type="file" name="devis_recu"  class="form-control mb-4" id="platform-title" placeholder="Intituler de l'article"  >
+                                                            
+                                                        </div>
+                                                           
+                                                        
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                           
+            
+                                        </div>
+                                     
+                                           
+                                </div>
+
+                              
 
                              
 
@@ -396,44 +424,7 @@
                         </div>
                     </div>
                  
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Ajout Article </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="POST" action="{{url('/ajouter/arrete/article/')}}">
-                                      @csrf
-                                                    <div class="form-group">
-                                                        <label for="platform-title">Intituler de l'article</label>
-                                                        <input type="text" name="intituler"  class="form-control mb-4" id="platform-title" placeholder="Intituler de l'article"  >
-                                                       
-                                                      @foreach ($devis as $row)
-                                                         <input type="hidden" name="iddevis" value="{{$row->id}}">
-                                                      @endforeach
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="platform-title">Quantite</label>
-                                                        <input type="number" class="form-control mb-4" name="quantite" id="platform-title" placeholder="10"  >
-
-                                                    </div>
-                                                    
-                                                
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
-                                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                                </form>                                
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
                     <div class="account-settings-footer">
                         
@@ -442,14 +433,20 @@
                             <div class="blockui-growl-message">
                                 <i class="flaticon-double-check"></i>&nbsp; Vos produit sont bien enregistrer
                             </div>
-                            <form method="POST" action="{{url('/confirmer/devis')}}">
-                                @csrf
+                         
                                 @foreach ($devis as $row)
                                     
                                 
+                                                
+                                            
                                 <input type="hidden" name="idevis" value="{{$row->id}}">
+                                <input type="hidden" name="nom_fournisseur" value="{{$row->nom_fournisseur}}">
+                                <input type="hidden" name="prix" value="{{$row->prix}}">
+
+
+                                
                                 @endforeach
-                                <button   id="multiple-messages" class="btn btn-primary">Passer la commander </button>
+                                <button type="submit"  id="multiple-messages" class="btn btn-primary">Passer la commander </button>
 
                             </form>
 

@@ -78,12 +78,16 @@ class homecontroller extends Controller
     {
         $intituler = request('intituler');
         $quantite = request('quantite');
+        $description = request('description');
+        $prix = request('prix');
         $id = request('iddevis');
         $date = now();
 
         DB::table('paniers')->insert([
             'intituler' => $intituler,
             'quantite' => $quantite,
+            'description' => $description,
+            'prix_souhaite' => $prix,
             'created_at' => $date,
             'status' => 1,
             'id_devis' => $id,
@@ -95,9 +99,10 @@ class homecontroller extends Controller
     public function deletearticle(Request $request)
     {
         $id = request('iddevis2');
+        $idarticle = request('idarticle');
         $dare = now();
         DB::table('paniers')
-            ->where('id', $id)
+            ->where('id', $idarticle)
             ->update(['deleted_at' => $dare]);
 
         return redirect("/devis/$id");
@@ -162,6 +167,7 @@ class homecontroller extends Controller
 
         return redirect("/devis/arrete/$id");
     }
+
     public function confirmer_devis(Request $request)
     {
         // creation d'une commande a partir du devis 
@@ -185,6 +191,8 @@ class homecontroller extends Controller
             DB::table('marchandises')->insert([
                 'intituler' => $row->intituler,
                 'quatite' => $row->quantite,
+                'prix_unitaire' => $row->prix_souhaite,
+                'description' => $row->description,
                 'created_at' => $date,
                 'status' => '1',
                 'id_commande' => $id_last,
@@ -197,12 +205,28 @@ class homecontroller extends Controller
                     'status' => '4',
                 ]);
         }
-        return ' fini va voir ';
+        return redirect('/commandes');
     }
 
     public function commandes()
     {
-        $commade =  DB::select("SELECT * FROM `commandes` WHERE `deleted_at` is null ");
+        $commade =  DB::select("SELECT SUM( `quatite`*`prix_unitaire`) as sumtotal, `commandes`.`id` , `commandes`.`id_devis`,`commandes`.`nom_fourniseur`,`commandes`.`status`,`commandes`.`created_at` FROM `marchandises`,`commandes` WHERE `commandes`.`id` = `marchandises`.`id_commande` GROUP BY `commandes`.`id` and `commandes`.`id_devis`and  `commandes`.`nom_fourniseur` and `commandes`.`status` and `commandes`.`created_at` ");
         return view('commandes', compact('commade'));
+    }
+    public function commande($id)
+    {
+        $commande =  DB::select("SELECT * FROM `commandes` WHERE `commandes`.`id`= $id and `deleted_at` is null ");
+        foreach ($commande as $row) {
+            $iddevis = $row->id_devis;
+        }
+        $devis =  DB::select("SELECT * FROM `devis` WHERE `devis`.`id`= $iddevis and `deleted_at` is null ");
+        $sumcommande =  DB::select("SELECT SUM( `quatite`*`prix_unitaire`) as sumtotal, `commandes`.`id` , `commandes`.`id_devis`,`commandes`.`nom_fourniseur`,`commandes`.`status`,`commandes`.`created_at` FROM `marchandises`,`commandes` WHERE `commandes`.`id` = `marchandises`.`id_commande` and `commandes`.`id` = $id  GROUP BY `commandes`.`id` and `commandes`.`id_devis`and  `commandes`.`nom_fourniseur` and `commandes`.`status` and `commandes`.`created_at` ");
+        $marchandises =  DB::select("SELECT * FROM `marchandises` WHERE `marchandises`.`id_commande`= $id and `deleted_at` is null  ");
+        $paiements =  DB::select("SELECT * FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null  ");
+        $debours =  DB::select("SELECT * FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null  ");
+        $document =  DB::select("SELECT * FROM `documents` WHERE `documents`.`id_commande`= $id and `deleted_at` is null  ");
+        $waybills =  DB::select("SELECT * FROM `waybills`,`marchandises` WHERE `waybills`.`id_commande`= $id and `marchandises`.`id` = `waybills`.`id_marchandise`  and `deleted_at` is null  ");
+        $summontant_paye =  DB::select("SELECT  SUM( `montant_paye`) as summontant_paye FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null  ");
+        return view('commande', compact('commande', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye'));
     }
 }
