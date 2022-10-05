@@ -23,6 +23,7 @@ use App\Http\Controllers\homecontroller;
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
 // devis  
 Route::get('/', [homecontroller::class, 'homepage'])->name('home');
 Route::get('/devis', [homecontroller::class, 'devis'])->name('devis');
@@ -43,8 +44,10 @@ Route::post('/confirmer/devis', [homecontroller::class, 'commandes']);
 Route::post('/confirmer/devis', [homecontroller::class, 'confirmer_devis']);
 
 // commandes 
+
 Route::get('/commandes', [homecontroller::class, 'commandes']);
 Route::get('/commandes/{id}', [homecontroller::class, 'commande']);
+Route::post('/ajout/paiement', [homecontroller::class, 'ajoutpaiement']);
 
 /*
 Route::get('/clients', [clientController::class, 'index'])->name('allclient');

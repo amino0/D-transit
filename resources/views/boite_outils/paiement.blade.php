@@ -4,20 +4,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - Custom Styled DataTables</title>
+    <title>E - Commande</title>
     <link rel="icon" type="image/x-icon" href="{{asset('template/assets/img/favicon.ico')}}"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="{{asset('template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('template/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
-
-    <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
     <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/datatables.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('template/assets/css/forms/theme-checkbox-radio.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/dt-global_style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/table/datatable/custom_dt_custom.css')}}">
     <!-- END PAGE LEVEL CUSTOM STYLES -->
+    <!--  BEGIN CUSTOM STYLE FILE  -->
+    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/dropify/dropify.min.css')}}">
+    <link href="{{asset('template/assets/css/users/account-setting.css')}}" rel="stylesheet" type="text/css" />
+    <!--  END CUSTOM STYLE FILE  -->
 </head>
 <body class="sidebar-noneoverflow">
     
@@ -28,7 +33,7 @@
             <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
             <div class="nav-logo align-self-center">
-                <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name"> I&E HIRAB djbouti</span></a>
+                <a class="navbar-brand" href="{{url('/')}}"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name">I&E transit</span></a>
             </div>
 
             <ul class="navbar-item flex-row mr-auto">
@@ -43,19 +48,7 @@
             </ul>
 
             <ul class="navbar-item flex-row nav-dropdowns">
-                <li class="nav-item dropdown language-dropdown more-dropdown">
-                    <div class="dropdown custom-dropdown-icon">
-                        <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{asset('template/assets/img/ca.png')}}" class="flag-width" alt="flag"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-
-                        <div class="dropdown-menu dropdown-menu-right animated fadeInUp" aria-labelledby="customDropdown">
-                            <a class="dropdown-item" data-img-value="de" data-value="de" href="javascript:void(0);"><img src="{{asset('template/assets/img/de.png')}}" class="flag-width" alt="flag"> German</a>
-                            <a class="dropdown-item" data-img-value="jp" data-value="jp" href="javascript:void(0);"><img src="{{asset('template/assets/img/jp.png')}}" class="flag-width" alt="flag"> Japanese</a>
-                            <a class="dropdown-item" data-img-value="fr" data-value="fr" href="javascript:void(0);"><img src="{{asset('template/assets/img/fr.png')}}" class="flag-width" alt="flag"> French</a>
-                            <a class="dropdown-item" data-img-value="ca" data-value="en" href="javascript:void(0);"><img src="{{asset('template/assets/img/ca.png')}}" class="flag-width" alt="flag"> English</a>
-                        </div>
-                    </div>
-                </li>
-
+               
                 <li class="nav-item dropdown message-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><span class="badge badge-success"></span>
@@ -184,28 +177,12 @@
                         <div class="media">
                             <img src="{{asset('template/assets/img/90x90.jpg')}}" class="img-fluid" alt="admin-profile">
                             <div class="media-body align-self-center">
-                                <h6><span>Hi,</span> Alan</h6>
+                                <h6><span>Bonjour,</span>   Alan </h6>
                             </div>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </a>
-                    <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="user-profile-dropdown">
-                        <div class="">
-                            <div class="dropdown-item">
-                                <a class="" href="user_profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> My Profile</a>
-                            </div>
-                            <div class="dropdown-item">
-                                <a class="" href="apps_mailbox.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg> Inbox</a>
-                            </div>
-                            <div class="dropdown-item">
-                                <a class="" href="auth_lockscreen.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Lock Screen</a>
-                            </div>
-                            <div class="dropdown-item">
-                                <a class="" href="auth_login.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Sign Out</a>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                 </li>
             </ul>
         </header>
@@ -253,7 +230,7 @@
                         </a>
                       
                     </li>
-                    <li class="menu single-menu active">
+                    <li class="menu single-menu active ">
                         <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -263,23 +240,7 @@
                       
                     </li> 
                     
-                    <li class="menu single-menu ">
-                        <a href="#" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
-                            </div>
-                        </a>
-                      
-                    </li> 
-                    
-                    <li class="menu single-menu ">
-                        <a href="#" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>                                <span>Vente</span>
-                            </div>
-                        </a>
-                      
-                    </li> 
+              
 
                     <li class="menu single-menu">
                         <a href="#more" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -306,83 +267,119 @@
 
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
-            <div class="layout-px-spacing">
+            <div class="layout-px-spacing">                
+                    
+                <div class="account-settings-container layout-top-spacing">
 
-                <div class="row layout-top-spacing layout-spacing">
-                    <div class="col-lg-12">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-header">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Liste des Commandes </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget-content widget-content-area">
-                                <div class="table-responsive mb-4">
-                                    <table id="style-2" class="table style-2  table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th class="checkbox-column"> Record </th>
-                                                <th>Id commande  </th>
-                                                <th>Nom fourniseur </th>
-                                                <th>Num Cotation </th>
-                                                <th>Montant total</th>
-                                                <th class="text-center">Statut</th>
-                                                <th>Créée le</th>
-                                                
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($commade as $row)
-                                                
+                    <div class="account-content">
+                        <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
+                            <div class="row">
+                             
+
+                               
+
+                                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                                    <form id="work-platforms" class="section work-platforms" method="POST" action="{{url('/ajouter/article/')}}">
+                                        <div class="info">
+                                        @foreach ($commande as $row)
                                             
-                                            <tr>
-                                                <td class="checkbox-column"> {{$row->id}} </td>
-                                                <td>{{$row->id}}</td>
-                                                <td>{{$row->nom_fourniseur}}</td>
-                                                <td>{{$row->id_devis}}</td>
-                                                <td> 
-                                                    {{$row->sumtotal}}
-                                                </td>
-                                                <td>@if ($row->status == 1 )
-                                                    <span class=' shadow-none badge outline-badge-warning'>En attente </span>
-                                                   
-                                                    @endif</td>
-                                                <td>{{$row->created_at}}</td>
-                                                
-                                                <td class="text-center">
-                                                    <a href="{{url("/commandes/$row->id")}}" class="btn btn-outline-primary"  >Voir</a></td>
-                                            </tr>
+                                        
+                                            <h3> Commande <b> N° {{$row->id}} </b> pour le Fournisseur <b> {{$row->nom_fourniseur}} </b> </h3>
                                             @endforeach
-                                        </tbody>
-                                    </table>
+                                            <h5 class="">Ajout d'un paiement</h5>
+                                            <div class="row">
+                                                <div class="col-md-12 text-right mb-5">
+                                                    <button id="add-work-platforms" class="btn btn-primary">Ajouter</button>
+                                                </div>
+                                                <div class="col-md-11 mx-auto">
+                                                    {{ csrf_field() }}
+
+                                                    <div class="platform-div">
+                                                        <div class="form-group">
+                                                            <label for="platform-title">Montant payer</label>
+                                                            <input type="text" name="montant"  class="form-control mb-4" id="platform-title" placeholder="Veillez saisir le montant payer"  >
+                                                            
+                                                            
+                                                          @foreach ($commande as $row)
+                                                             <input type="hidden" name="idcommande" value="{{$row->id}}">
+                                                          @endforeach
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="platform-title">Date de paiement</label>
+                                                            <input type="date" name="date"  class="form-control mb-4" id="platform-title"   >
+                                                         </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="platform-title">Numero de compte </label>
+                                                            <input type="number" class="form-control mb-4" name="quantite" id="platform-title" placeholder="N° Compte"  >
+
+                                                        </div>
+                                                        
+                                                        
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
+
+                               
+
+                             
+
                             </div>
                         </div>
                     </div>
+
+                    
                 </div>
 
-                
-               
                 </div>
-        <div class="footer-wrapper">
-                <div class="footer-section f-section-1">
-                    <p class="">Copyright © 2020 <a target="_blank" href="https://designreset.com">DesignReset</a>, All rights reserved.</p>
+                <div class="footer-wrapper">
+                    <div class="footer-section f-section-1">
+                        <p class="">Copyright © 2020 <a target="_blank" href="https://designreset.com">DesignReset</a>, All rights reserved.</p>
+                    </div>
+                    <div class="footer-section f-section-2">
+                        <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
+                    </div>
                 </div>
-                <div class="footer-section f-section-2">
-                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
-                </div>
-            </div>
         </div>
         <!--  END CONTENT AREA  -->
 
     </div>
     <!-- END MAIN CONTAINER -->
     
-    
-    
+    <script>
+        $('#standardModal').on('show.bs.modal', function (event) {
+   var button = $(event.relatedTarget) 
+   var cat_id = button.data('catid') 
+   var modal = $(this)
+   modal.find('.modal-body #cat_id').val(cat_id);
+})
+   </script>
+
+      <!-- Modal -->
+      <div class="modal fade modal-notification" id="standardModal" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="standardModalLabel">
+          <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="icon-content">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </div>
+                <input  name="category_id" id="cat_id" value="">
+
+                <p class="modal-text" id="recipient-name">Vivamus vitae hendrerit neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi consequat auctor turpis, vitae dictum augue efficitur vitae. Vestibulum a risus ipsum. Quisque nec lacus dolor. Quisque ornare tempor orci id rutrum.</p>
+             </div>
+            <div class="modal-footer justify-content-between">
+              <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+              <button type="button" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="{{asset('template/assets/js/libs/jquery-3.1.1.min.js')}}"></script>
     <script src="{{asset('template/bootstrap/js/popper.min.js')}}"></script>
@@ -395,6 +392,15 @@
             App.init();
         });
     </script>
+    <script src="{{asset('template/assets/js/custom.js')}}"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+    <!--  BEGIN CUSTOM SCRIPTS FILE  -->
+
+    <script src="{{asset('template/plugins/dropify/dropify.min.js')}}"></script>
+    <script src="{{asset('template/plugins/blockui/jquery.blockUI.min.js')}}"></script>
+    <!-- <script src="plugins/tagInput/tags-input.js')}}"></script> -->
+    <script src="{{asset('template/assets/js/users/account-settings.js')}}"></script>
     <script src="{{asset('template/assets/js/custom.js')}}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
@@ -421,9 +427,7 @@
             "lengthMenu": [5, 10, 20, 50],
             "pageLength": 5
         });
-
         multiCheck(c1);
-
         c2 = $('#style-2').DataTable({
             headerCallback:function(e, a, t, n, s) {
                 e.getElementsByTagName("th")[0].innerHTML='<label class="new-control new-checkbox checkbox-outline-primary m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
@@ -443,9 +447,7 @@
             "lengthMenu": [5, 10, 20, 50],
             "pageLength": 5 
         });
-
         multiCheck(c2);
-
         c3 = $('#style-3').DataTable({
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
@@ -458,9 +460,8 @@
             "lengthMenu": [5, 10, 20, 50],
             "pageLength": 5
         });
-
         multiCheck(c3);
     </script>
-    <!-- END PAGE LEVEL SCRIPTS -->  
+    <!--  END CUSTOM SCRIPTS FILE  -->
 </body>
 </html>

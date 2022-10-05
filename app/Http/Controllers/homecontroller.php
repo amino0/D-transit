@@ -229,4 +229,22 @@ class homecontroller extends Controller
         $summontant_paye =  DB::select("SELECT  SUM( `montant_paye`) as summontant_paye FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null   ");
         return view('commande', compact('commande', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye'));
     }
+    public function ajoutpaiement(Request $request)
+    {
+        $idcommande = request('idcommande');
+        $montant = request('montant');
+        $date = request('date');
+        $compte = request('compte');
+        $now = now();
+        // dd($date);
+        DB::table('paiements')->insert([
+            'montant_paye' => $montant,
+            'date_paiement' => $date,
+            'numero_compte' => $compte,
+            'id_commande' => $idcommande,
+            'created_at' => $now,
+        ]);
+
+        return redirect("/commandes/$idcommande");
+    }
 }

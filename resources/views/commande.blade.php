@@ -13,19 +13,20 @@
     <!-- END GLOBAL MANDATORY STYLES -->
     <link href="{{asset('template/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('template/assets/css/components/tabs-accordian/custom-tabs.css')}}" rel="stylesheet" type="text/css" />
-   
-    <link href="{{asset('template/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
+
     <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/select2/select2.min.css')}}">
     <link href="{{asset('template/plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/bootstrap-select/bootstrap-select.min.css')}}">
+    <link href="{{asset('template/plugins/flatpickr/flatpickr.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('template/plugins/noUiSlider/nouislider.min.css')}}" rel="stylesheet" type="text/css">
+    
     <!-- END PAGE LEVEL PLUGINS -->
    
     <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link href="{{asset('template/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('template/assets/css/components/custom-modal.css')}}" rel="stylesheet" type="text/css" />
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link href="{{asset('template/assets/css/users/user-profile.css')}}" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
-    <link href="{{asset('template/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('template/plugins/file-upload/file-upload-with-preview.min.css')}}" rel="stylesheet" type="text/css" />
 
 </head>
@@ -38,7 +39,7 @@
             <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
             <div class="nav-logo align-self-center">
-                <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name">I&E transit</span></a>
+                <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name"> I&E HIRAB djbouti</span></a>
             </div>
 
             <ul class="navbar-item flex-row mr-auto">
@@ -238,7 +239,7 @@
                         </a>
                     </li>
                     <li class="nav-item theme-text">
-                        <a href="index.html" class="nav-link"> I&E transit </a>
+                        <a href="index.html" class="nav-link"> I&E HIRAB djbouti </a>
                     </li>
                 </ul>
 
@@ -273,7 +274,23 @@
                       
                     </li> 
                     
-              
+                    <li class="menu single-menu ">
+                        <a href="#" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
+                            </div>
+                        </a>
+                      
+                    </li> 
+                    
+                    <li class="menu single-menu ">
+                        <a href="#" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>                                <span>Vente</span>
+                            </div>
+                        </a>
+                      
+                    </li> 
 
                     <li class="menu single-menu">
                         <a href="#more" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -318,28 +335,43 @@
 
                                     <div class="">
                                         <ul class="contacts-block list-unstyled">
+                                            @foreach ($commande as $row )
+                                            
                                             <li class="contacts-block__item">
-                                                <a href="">
+
+                                            <button type="button" class="btn btn-primary mb-2 mr-2" data-toggle="modal" data-target="#ajoutpaiement">
+                                                Ajout paiement
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                                             Ajout paiement</a>                                          
-                                            </li> 
+
+                                             </button>
+                                            </li>
                                             <li class="contacts-block__item">
-                                                <a href="">
+
+                                                <button type="button" class="btn btn-primary mb-2 mr-2" data-toggle="modal" data-target="#ajoutdocument">
+                                                    Ajout debours
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>                                           
-                                                      Ajout debours</a> 
-                                                                                               </li>
-                                         <li class="contacts-block__item">
-                                                <a href="">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>                                           
-                                                      Ajout document</a> 
-                                                                                               </li>
-                                                                                               <li class="contacts-block__item">
-                                                                                                <a href="">
-                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                                                                                                      Ajout waybill</a> 
-                                                                                                                                               </li>
+    
+                                                 </button>
+                                                </li>
+                                                <li class="contacts-block__item">
+
+                                                    <button type="button" class="btn btn-primary mb-2 mr-2" data-toggle="modal" data-target="#ajoutdocument">
+                                                        Ajout document
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>                                           
+        
+                                                     </button>
+                                                    </li>  
+                                                    <li class="contacts-block__item">
+
+                                                    <button type="button" class="btn btn-primary mb-2 mr-2" data-toggle="modal" data-target="#ajoutpaiement">
+                                                        Ajout Waybill
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        
+                                                     </button>
+                                                    </li>
+
                                                                                                                                                
-                                           
+                                           @endforeach
                                            
                                         </ul>
                                     </div>                                    
@@ -640,8 +672,105 @@
 
                 </div>
                 </div>
-                
+        <!-- Modal paiement  -->
+           <div class="modal fade" id="ajoutpaiement" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajout d'un paiement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+<form method="POST" action="{{url('/ajout/paiement')}}">
+    @csrf
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlInput2">Montant en $</label>
+                            <input type="number" name="montant" class="form-control" id="exampleFormControlInput2" placeholder="..... $" required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <input id="basicFlatpickr" name="date"  class="form-control flatpickr flatpickr-input active" type="text" placeholder="Date de paiement ..." required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlSelect1">Compte bancaire </label>
+                            
+                            <select name="compte" class="form-control  basic" required>
+                               
+                               <option value="000151" >150024 CAC bank </option>
+                               <option value="000151" >255801 SALAM bank </option>
+                               <option value="000151" >115507 EAB </option>
+                             
+                              </select>
+                        </div>
+                        @foreach ($commande as $row)
+                            <input type="hidden" name="idcommande" value="{{$row->id}}">
+                        @endforeach
 
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annule</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>     
+        <!-- End Modal paiement  -->
+        <!-- Modal document  -->
+        <div class="modal fade" id="ajoutdocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajout d'un document</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlInput2reference">reference</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput2reference" placeholder="ref du document">
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlSelect1">Compte bancaire </label>
+                            
+                            <select class="form-control  basic">
+                               
+                               <option value="000151" >150024 CAC bank </option>
+                               <option value="000151" >255801 SALAM bank </option>
+                               <option value="000151" >115507 EAB </option>
+                             
+                              </select>
+                        </div>
+                        
+
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-4 mt-3">
+                            <label for="exampleFormControlFile1">Recu ou cheque </label>
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annule</button>
+                        <button type="button" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>     
+        <!-- End Modal document  -->
                 
                
 
@@ -665,6 +794,8 @@
         //Second upload
         var secondUpload = new FileUploadWithPreview('mySecondImage')
     </script>
+     <script src="{{asset('template/assets/js/scrollspyNav.js')}}"></script>
+   
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="{{asset('template/assets/js/scrollspyNav.js')}}"></script>
     <script src="{{asset('template/plugins/select2/select2.min.js')}}"></script>
@@ -721,10 +852,19 @@
         $('#videoMedia1 button, #videoMedia2 button').click(function () {
             $('#videoMedia1 iframe, #videoMedia2 iframe').removeAttr('src');
         });
+        
     </script>   
     
     <script src="{{asset('template/assets/js/scrollspyNav.js')}}"></script>
     <script src="{{asset('template/plugins/file-upload/file-upload-with-preview.min.js')}}"></script> 
-  
+    <script src="{{asset('template/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('template/assets/js/scrollspyNav.js')}}"></script>
+    <script src="{{asset('template/assets/js/scrollspyNav.js')}}"></script>
+    <script src="{{asset('template/plugins/flatpickr/flatpickr.js')}}"></script>
+    <script src="{{asset('template/plugins/noUiSlider/nouislider.min.js')}}"></script>
+
+    <script src="{{asset('template/plugins/flatpickr/custom-flatpickr.js')}}"></script>
+    <script src="{{asset('template/plugins/noUiSlider/custom-nouiSlider.js')}}"></script>
+    <script src="{{asset('template/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js')}}"></script>
 </body>
 </html>
