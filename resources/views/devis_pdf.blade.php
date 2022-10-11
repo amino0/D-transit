@@ -23,6 +23,7 @@
  <tr>
  <th>Intituler</th>
  <th>description</th>
+ <th>metrecube</th>
  <th>Quantite</th>
  <th>Prix unitaire</th>
  <th>Total</th>
@@ -35,14 +36,15 @@
  <tr>
  <td>{{ $user->intituler }}</td>
  <td>{{ $user->description }}</td>
+ <td>{{ $user->metrecube }}</td>
  <td>{{ $user->quantite }}</td>
  <td>{{ $user->prix_souhaite }}</td>
  <td>@php
-    $montant_total = $user->quantite*$user->prix_souhaite;
+    $montant_total = $user->metrecube*$user->prix_souhaite;
 @endphp {{$montant_total}}</td>
  </tr>
  @php
-     $t = $t + $user->quantite*$user->prix_souhaite;
+     $t = $t + $user->metrecube*$user->prix_souhaite;
  @endphp
  @endforeach
 <tr>

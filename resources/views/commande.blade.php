@@ -275,7 +275,7 @@
                     </li> 
                     
                     <li class="menu single-menu ">
-                        <a href="#" class="dropdown-toggle">
+                        <a href="{{url('/stock')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
                             </div>
@@ -577,7 +577,7 @@
                                                       <tr>
                                                           <th class="text-center">#</th>
                                                           <th>Intitulé</th>
-                                                          <th>Quantité</th>
+                                                          <th>Type</th>
                                                           <th>Montant</th>
                                                           <th>PJ</th>
                                                           <th>Créé le</th>
@@ -588,7 +588,7 @@
                                                     <tr>
                                                           <td class="text-center">{{$row->id}}</td>
                                                           <td class="text-primary">{{$row->intituler}}</td>
-                                                          <td>{{$row->quantite}}</td>
+                                                          <td>{{$row->type_debours}}</td>
                                                           <td>{{$row->prix}}</td>
                                                           <td>{{$row->pj_debours}}</td>
                                                           
@@ -609,17 +609,20 @@
                                                           <th class="text-center">#</th>
                                                           <th>Référence</th>
                                                           <th>Type</th>
-                                                          <th>P.J</th>
+                                                          <th>Voir</th>
                                                           <th>créé le</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
                                                     @foreach ($document as $row) 
                                                     <tr>
-                                                          <td class="text-center">{{$row->id}}</td>
-                                                          <td class="text-primary">{{$row->ref}}</td>
+                                                          <td class="text-center">{{$row->id}}</td> 
                                                           <td class="text-primary">{{$row->type}}</td>
-                                                          <td>{{$row->pj}}</td>
+
+                                                          <td class="text-primary">{{$row->ref}}</td>
+                                                          <td><a href="{{"$row->file_path"}}" target='__blanc'> Voir 
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                        </a> </td>
                                                           
                                                           <td> {{$row->created_at}}</td>
                                                       </tr>
@@ -728,27 +731,92 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <form method="POST" action="{{url('/ajout/debours')}}" enctype="multipart/form-data">
+                            @csrf
+                        <h5 class="modal-title" id="exampleModalLabel">Ajout d'un debours</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @foreach ($commande as $row)
+                            <input type="hidden" name="idcommande" value="{{$row->id}}">
+                        @endforeach
+
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlInput2reference">Intitulé</label>
+                            <input type="text" class="form-control" name="intituler" id="exampleFormControlInput2reference" placeholder="Intituler du debour">
+                        </div>
+                        
+                        
+                        
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlSelect1">Type </label>
+                            
+                            <select name="type" class="form-control  basic">
+                               
+                               <option value="000151" >Dechargement </option>
+                               <option value="000151" >Get pass </option>
+                               <option value="000151" >STGD</option>
+                               <option value="000151" >Autre</option>
+                             
+                              </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlInput2reference">montant</label>
+                            <input type="text" class="form-control" name="prix" id="exampleFormControlInput2reference" placeholder="momtant du bedour">
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" name="obs_debours" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>     
+        <!-- End Modal document  -->
+         <!-- Modal debours  -->
+         <div class="modal fade" id="ajoutdocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <form method="POST" action="{{url('/ajout/document')}}" enctype="multipart/form-data">
+                            @csrf
                         <h5 class="modal-title" id="exampleModalLabel">Ajout d'un document</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
                     </div>
                     <div class="modal-body">
-                        
+                        @foreach ($commande as $row)
+                            <input type="hidden" name="idcommande" value="{{$row->id}}">
+                        @endforeach
 
                         <div class="form-group mb-4">
-                            <label for="exampleFormControlInput2reference">reference</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput2reference" placeholder="ref du document">
+                            <label for="exampleFormControlInput2reference">Référence</label>
+                            <input type="text" class="form-control" name="ref" id="exampleFormControlInput2reference" placeholder="ref du document">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlInput2reference">Intitulé</label>
+                            <input type="text" class="form-control" name="intituler" id="exampleFormControlInput2reference" placeholder="ref du document">
                         </div>
                         
+                        
                         <div class="form-group mb-4">
-                            <label for="exampleFormControlSelect1">Compte bancaire </label>
+                            <label for="exampleFormControlSelect1">Type </label>
                             
-                            <select class="form-control  basic">
+                            <select name="type" class="form-control  basic">
                                
-                               <option value="000151" >150024 CAC bank </option>
-                               <option value="000151" >255801 SALAM bank </option>
-                               <option value="000151" >115507 EAB </option>
+                               <option value="000151" >Facture </option>
+                               <option value="000151" >Bill of Landing </option>
+                               <option value="000151" >Autre</option>
                              
                               </select>
                         </div>
@@ -759,18 +827,19 @@
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                         <div class="form-group mb-4 mt-3">
-                            <label for="exampleFormControlFile1">Recu ou cheque </label>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            <label for="exampleFormControlFile1">Impoter le document label>
+                            <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annule</button>
-                        <button type="button" class="btn btn-primary">Enregistrer</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
                     </div>
+                </form>
                 </div>
             </div>
         </div>     
-        <!-- End Modal document  -->
+        <!-- End Modal debourd  -->
                 
                
 

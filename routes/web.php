@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\FacturesController;
-use App\Http\Controllers\clientController;
+use App\Http\Controllers\stockcontroller;
 use App\Http\Controllers\homecontroller;
 
 /*
@@ -48,6 +48,12 @@ Route::post('/confirmer/devis', [homecontroller::class, 'confirmer_devis']);
 Route::get('/commandes', [homecontroller::class, 'commandes']);
 Route::get('/commandes/{id}', [homecontroller::class, 'commande']);
 Route::post('/ajout/paiement', [homecontroller::class, 'ajoutpaiement']);
+Route::post('/ajout/document', [homecontroller::class, 'ajoutdocument']);
+Route::post('/ajout/debours', [homecontroller::class, 'ajoutdebours']);
+
+// stock 
+Route::get('/stock', [stockcontroller::class, 'index']);
+
 
 /*
 Route::get('/clients', [clientController::class, 'index'])->name('allclient');

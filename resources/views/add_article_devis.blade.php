@@ -311,22 +311,46 @@
                                                     {{ csrf_field() }}
 
                                                     <div class="platform-div">
-                                                        <div class="form-group">
-                                                            <label for="platform-title">Intitulé de l'article</label>
-                                                            <input type="text" name="intituler"  class="form-control mb-4" id="platform-title" placeholder="Intitulé de l'article"  >
+                                                        <div class="widget-content widget-content-area">
+                                                            <p>Selection de l'article </p> 
+                                                            <select name="intituler" class="form-control nested">
+                                                              @foreach ($famille as $row )
+                                                                <optgroup label="{{$row->nom_famille}}">
+                                                                   @foreach ($type_articles as $ross)
+                                                                       
+                                                                   @if ($row->id == $ross->id_famille)
+                                                                       
+                                                                   
+                                                                   <option value="{{$ross->ds_type_article}}" >{{$ross->ds_type_article}}</option>
+                                                                   @endif
+                                                                   @endforeach
+
+                                                                   
+                                                                </optgroup>
+                                                                @endforeach
+                                                              </select>
+                        
                                                             
+                        
+                                                          
+                        
+                                                        </div>
+                                                        
                                                             
                                                           @foreach ($devis as $row)
                                                              <input type="hidden" name="iddevis" value="{{$row->id}}">
                                                           @endforeach
-                                                        </div>
                                                         <div class="form-group">
                                                             <label for="platform-title">Description de l'article</label>
                                                             <input type="text" name="description"  class="form-control mb-4" id="platform-title" placeholder="Description de l'article"  >
                                                             
                                                             
                                                          </div>
-                                                        
+                                                         <div class="form-group">
+                                                            <label for="platform-title">Metrecube</label>
+                                                            <input type="number" class="form-control mb-4" name="metrecube" id="platform-title" placeholder="metre-cube"  >
+
+                                                        </div>
                                                         <div class="form-group">
                                                             <label for="platform-title">Quantité</label>
                                                             <input type="number" class="form-control mb-4" name="quantite" id="platform-title" placeholder="10"  >
@@ -358,6 +382,7 @@
                                                             <th class="checkbox-column text-center"> Record Id </th>
                                                             <th>Article</th>
                                                             <th>Description</th>
+                                                            <th>Metre-cube</th>
                                                             <th>Quantite</th>
                                                             <th>P.U </th>
                                                             <th>Total</th>
@@ -373,11 +398,12 @@
                                                                 {{$row->intituler}}
                                                             </td>
                                                             <td>{{$row->description}}</td>
+                                                            <td>{{$row->metrecube}}</td>
                                                             <td>{{$row->quantite}}</td>
                                                             <td>{{$row->prix_souhaite}} $</td>
                                                             <td>
                                                                 @php
-                                                                    $montant_total = $row->quantite*$row->prix_souhaite;
+                                                                    $montant_total = $row->metrecube*$row->prix_souhaite;
                                                                 @endphp
                                                                 {{$montant_total}} $</td>
                                                             <td class="text-center">

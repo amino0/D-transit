@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use PDF;
+use App\Document;
+use App\Debourd;
 
 use Illuminate\Http\Request;
 
@@ -70,14 +72,17 @@ class homecontroller extends Controller
 
         $panier =  DB::select("SELECT * FROM `paniers` WHERE `paniers`.`id_devis`= $id and `deleted_at` is null ");
         $devis =  DB::select("SELECT * FROM `devis` WHERE id = $id and `deleted_at` is null ");
+        $famille =  DB::select("SELECT * FROM `famille_articles` ");
+        $type_articles =  DB::select("SELECT * FROM `type_articles`");
 
-        return view('add_article_devis', compact('panier', 'devis'));
+        return view('add_article_devis', compact('panier', 'devis', 'famille', 'type_articles'));
     }
     // ajouter un article 
     public function addarticle()
     {
         $intituler = request('intituler');
         $quantite = request('quantite');
+        $metrecube = request('metrecube');
         $description = request('description');
         $prix = request('prix');
         $id = request('iddevis');
@@ -86,6 +91,7 @@ class homecontroller extends Controller
         DB::table('paniers')->insert([
             'intituler' => $intituler,
             'quantite' => $quantite,
+            'metrecube' => $metrecube,
             'description' => $description,
             'prix_souhaite' => $prix,
             'created_at' => $date,
@@ -191,6 +197,7 @@ class homecontroller extends Controller
             DB::table('marchandises')->insert([
                 'intituler' => $row->intituler,
                 'quatite' => $row->quantite,
+                'cubage' => $row->metrecube,
                 'prix_unitaire' => $row->prix_souhaite,
                 'description' => $row->description,
                 'created_at' => $date,
@@ -245,6 +252,58 @@ class homecontroller extends Controller
             'created_at' => $now,
         ]);
 
+        return redirect("/commandes/$idcommande");
+    }
+    public function ajoutdocument(Request $request)
+    {
+        $idcommande = request('idcommande');
+        $ref = request('ref');
+        $intituler = request('intituler');
+        $type = request('type');
+
+        $request->validate([
+            'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
+        ]);
+        $fileModel = new Document;
+        if ($request->file()) {
+            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+            $fileModel->filename = time() . '_' . $request->file->getClientOriginalName();
+            $fileModel->intituler = $intituler;
+            $fileModel->ref = $ref;
+            $fileModel->type = $type;
+            $fileModel->id_commande = $idcommande;
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->save();
+            return redirect("/commandes/$idcommande");
+        }
+        return redirect("/commandes/$idcommande");
+    }
+    public function ajoutdebours(Request $request)
+    {
+
+        $idcommandee = request('idcommande');
+        $prix = request('prix');
+        $intituler = request('intituler');
+        $type_debours = request('type');
+
+        // dd($idcommande);
+        $request->validate([
+            'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
+        ]);
+        $fileModel = new Debourd;
+        if ($request->file()) {
+            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+            $fileModel->filename = time() . '_' . $request->file->getClientOriginalName();
+            $fileModel->intituler = $intituler;
+            $fileModel->prix = $prix;
+            $fileModel->type = $type_debours;
+            $fileModel->id_commande = $idcommandee;
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->save();
+            return redirect("/commandes/$idcommande");
+        }
         return redirect("/commandes/$idcommande");
     }
 }
