@@ -50,9 +50,12 @@ Route::get('/commandes/{id}', [homecontroller::class, 'commande']);
 Route::post('/ajout/paiement', [homecontroller::class, 'ajoutpaiement']);
 Route::post('/ajout/document', [homecontroller::class, 'ajoutdocument']);
 Route::post('/ajout/debours', [homecontroller::class, 'ajoutdebours']);
+Route::post('/ajout/ajoutwaybill', [homecontroller::class, 'ajoutwaybill']);
 
 // stock 
 Route::get('/stock', [stockcontroller::class, 'index']);
+Route::get('/stock/{id}', [stockcontroller::class, 'type']);
+Route::get('/stock/famille/{id}', [stockcontroller::class, 'famille']);
 
 
 /*

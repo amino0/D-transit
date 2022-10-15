@@ -344,7 +344,7 @@
                                                 <td>{{$row->nom_fourniseur}}</td>
                                                 <td>{{$row->id_devis}}</td>
                                                 <td> 
-                                                    {{$row->sumtotal}}
+                                                    {{$row->prix_convenu}}
                                                 </td>
                                                 <td>@if ($row->status == 1 )
                                                     <span class=' shadow-none badge outline-badge-warning'>En attente </span>

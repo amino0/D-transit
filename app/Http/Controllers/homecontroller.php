@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Document;
 use App\Debourd;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Foreach_;
 
 class homecontroller extends Controller
 {
@@ -81,6 +83,12 @@ class homecontroller extends Controller
     public function addarticle()
     {
         $intituler = request('intituler');
+        $tot  =  DB::select("SELECT * FROM `type_articles` where id=$intituler ");
+        foreach ($tot as $rodd) {
+            $id_famille = $rodd->id_famille;
+            $ds_type_article = $rodd->ds_type_article;
+        }
+
         $quantite = request('quantite');
         $metrecube = request('metrecube');
         $description = request('description');
@@ -89,9 +97,10 @@ class homecontroller extends Controller
         $date = now();
 
         DB::table('paniers')->insert([
-            'intituler' => $intituler,
+            'intituler' => $ds_type_article,
             'quantite' => $quantite,
             'metrecube' => $metrecube,
+            'id_famille' => $id_famille,
             'description' => $description,
             'prix_souhaite' => $prix,
             'created_at' => $date,
@@ -180,6 +189,7 @@ class homecontroller extends Controller
         $nom_f = request('nom_fournisseur');
         $prix = request('prix');
         $idevis = request('idevis');
+
         $date = now();
         $id_last = DB::table('commandes')->insertGetId([
             'nom_fourniseur' => $nom_f,
@@ -200,6 +210,7 @@ class homecontroller extends Controller
                 'cubage' => $row->metrecube,
                 'prix_unitaire' => $row->prix_souhaite,
                 'description' => $row->description,
+                'id_famille' => $row->id_famille,
                 'created_at' => $date,
                 'status' => '1',
                 'id_commande' => $id_last,
@@ -217,7 +228,9 @@ class homecontroller extends Controller
 
     public function commandes()
     {
-        $commade =  DB::select("SELECT SUM( `quatite`*`prix_unitaire`) as sumtotal, `commandes`.`id` , `commandes`.`id_devis`,`commandes`.`nom_fourniseur`,`commandes`.`status`,`commandes`.`created_at` FROM `marchandises`,`commandes` WHERE `commandes`.`id` = `marchandises`.`id_commande` GROUP BY `commandes`.`id` and `commandes`.`id_devis`and  `commandes`.`nom_fourniseur` and `commandes`.`status` and `commandes`.`created_at` ");
+        //  $commade =  DB::select("SELECT SUM( `quatite`*`prix_unitaire`) as sumtotal, `commandes`.`id` , `commandes`.`id_devis`,`commandes`.`nom_fourniseur`,`commandes`.`status`,`commandes`.`created_at` FROM `marchandises`,`commandes` WHERE `commandes`.`id` = `marchandises`.`id_commande` GROUP BY `commandes`.`id` and `commandes`.`id_devis`and  `commandes`.`nom_fourniseur` and `commandes`.`status` and `commandes`.`created_at` ");
+        $commade =  DB::select("SELECT * FROM `commandes`  GROUP BY  `commandes`.`id_devis` ");
+
         return view('commandes', compact('commade'));
     }
     public function commande($id)
@@ -227,14 +240,18 @@ class homecontroller extends Controller
             $iddevis = $row->id_devis;
         }
         $devis =  DB::select("SELECT * FROM `devis` WHERE `devis`.`id`= $iddevis and `deleted_at` is null ");
-        $sumcommande =  DB::select("SELECT SUM( `quatite`*`prix_unitaire`) as sumtotal, `commandes`.`id` , `commandes`.`id_devis`,`commandes`.`nom_fourniseur`,`commandes`.`status`,`commandes`.`created_at` FROM `marchandises`,`commandes` WHERE `commandes`.`id` = `marchandises`.`id_commande` and `commandes`.`id` = $id  GROUP BY `commandes`.`id` and `commandes`.`id_devis`and  `commandes`.`nom_fourniseur` and `commandes`.`status` and `commandes`.`created_at` ");
+        $sumcommande =  DB::select("SELECT SUM( `cubage`*`prix_unitaire`) as sumtotal, `commandes`.`id` , `commandes`.`id_devis`,`commandes`.`nom_fourniseur`,`commandes`.`status`,`commandes`.`created_at` FROM `marchandises`,`commandes` WHERE `commandes`.`id` = `marchandises`.`id_commande` and `commandes`.`id` = $id  GROUP BY `commandes`.`id` and `commandes`.`id_devis`and  `commandes`.`nom_fourniseur` and `commandes`.`status` and `commandes`.`created_at` ");
         $marchandises =  DB::select("SELECT * FROM `marchandises` WHERE `marchandises`.`id_commande`= $id and `deleted_at` is null  ");
         $paiements =  DB::select("SELECT * FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null  ");
         $debours =  DB::select("SELECT * FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null  ");
         $document =  DB::select("SELECT * FROM `documents` WHERE `documents`.`id_commande`= $id and `deleted_at` is null  ");
         $waybills =  DB::select("SELECT * FROM `waybills`,`marchandises` WHERE `waybills`.`id_commande` = 11 and `marchandises`.`id` = `waybills`.`id_marchandise` and `waybills`.`deleted_at` is null GROUP BY `waybills`.`id_marchandise`");
         $summontant_paye =  DB::select("SELECT  SUM( `montant_paye`) as summontant_paye FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null   ");
-        return view('commande', compact('commande', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye'));
+        $type_debours =  DB::select("SELECT  * FROM `type_debours` WHERE `deleted_at` is null   ");
+        $marchandise =  DB::select("SELECT * FROM `marchandises` WHERE  cubage is not null and `id_commande` = $id ");
+        $vehicules =  DB::select("SELECT * FROM `vehicules` WHERE  status is null ");
+        $chauffeurs =  DB::select("SELECT * FROM `chauffeurs` WHERE  status is null ");
+        return view('commande', compact('chauffeurs', 'commande', 'vehicules', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye', 'marchandise', 'type_debours'));
     }
     public function ajoutpaiement(Request $request)
     {
@@ -283,27 +300,43 @@ class homecontroller extends Controller
     {
 
         $idcommandee = request('idcommande');
-        $prix = request('prix');
+        $prix = request('montant');
         $intituler = request('intituler');
         $type_debours = request('type');
 
         // dd($idcommande);
-        $request->validate([
-            'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
-        ]);
+
         $fileModel = new Debourd;
-        if ($request->file()) {
-            $fileName = time() . '_' . $request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
-            $fileModel->filename = time() . '_' . $request->file->getClientOriginalName();
-            $fileModel->intituler = $intituler;
-            $fileModel->prix = $prix;
-            $fileModel->type = $type_debours;
-            $fileModel->id_commande = $idcommandee;
-            $fileModel->file_path = '/storage/' . $filePath;
-            $fileModel->save();
-            return redirect("/commandes/$idcommande");
-        }
-        return redirect("/commandes/$idcommande");
+
+        $fileModel->intituler = $intituler;
+        $fileModel->prix = $prix;
+        $fileModel->type_debours = $type_debours;
+        $fileModel->id_commande = $idcommandee;
+        $fileModel->save();
+        return redirect("/commandes/$idcommandee");
+    }
+    public function ajoutwaybill(Request $request)
+    {
+
+        $idcommandee = request('idcommande');
+        /*  $quantite = request('quantite');
+        $id_marchandise = request('id_marchandise');
+        $type_debours = request('type');
+       
+       */
+        $qrcode = base64_encode(QrCode::format('svg')->size(300)
+            ->generate("https://arrivedjib.gouv.dj/show/"));
+        // dd($idcommande);
+        /*
+        $fileModel = new Debourd;
+
+        $fileModel->intituler = $intituler;
+        $fileModel->prix = $prix;
+        $fileModel->type_debours = $type_debours;
+        $fileModel->id_commande = $idcommandee;
+        $fileModel->save();
+        */
+        $pdf = PDF::loadView(('pdf_waybill'), compact('qrcode'));
+        return $pdf->download("waybill_$idcommandee.pdf");
     }
 }
