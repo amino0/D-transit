@@ -404,32 +404,33 @@
 
                     <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
 
-                        <div class="skills layout-spacing ">
+                        <div class="skills layout-spacing  ">
                             <div class="widget-content widget-content-area">
-                                <h3 class="">Commande N° @foreach ($commande as $row)
-                                    {{$row->id}} <b> créé le </b> {{$row->created_at}} <b>par </b> Admin
-                                    
-                                </h3>
-                             
-<p>  <b>Fournisseur </b> :  {{$row->nom_fourniseur}}
-    <br>@endforeach
-    @foreach ($devis as $row)
-    <b>Cotation</b> :  N° <b> {{$row->id}} </b>  créé le <b>{{$row->created_at}} </b>par <b>{{$row->agent}}</b>
-    <br>
-    @endforeach
-    <b>@foreach ($sumcommande as $row) Montant Total </b> : @php
-        $montanttotal = $row->sumtotal;
-    @endphp {{$row->sumtotal}} $
-    <br>@endforeach
-    <b>@foreach ($summontant_paye as $row) Montant Payé </b> : 
-    @php
-        $montantpayer = $row->summontant_paye;
-    @endphp 
-    {{$row->summontant_paye}} $
-    <br>@endforeach
-    <b>@php $rest = $montanttotal - $montantpayer  @endphp Montant Restant </b> : {{$rest}} $
-    <br>
-    </p>
+                                
+                                <h3 class="">Bill of landing :@foreach ($commande as $row) <b>{{$row->bl}}</b>  @endforeach
+                                </h3>  
+                                                        
+                            <p>  <b>Fournisseur </b> :  {{$row->nom_fourniseur}}
+                            <p>  <b>Date BL </b> :  {{$row->date_bl}} -- <b>Client </b> :  {{$row->nom_client}}
+                           <br>          @foreach ($devis as $row)
+                                <b>Cotation</b> :  N° <b> {{$row->id}} </b>  créé le <b>{{$row->created_at}} </b>
+                                <br>
+                                @endforeach
+                                <b>@foreach ($sumcommande as $row) Montant Total </b> : @php
+                                    $montanttotal = $row->sumtotal;
+                                @endphp {{$row->sumtotal}} $
+                                <br>@endforeach
+                                <b>@foreach ($summontant_paye as $row) Montant Payé </b> : 
+                                @php
+                                    $montantpayer = $row->summontant_paye;
+                                @endphp 
+                                {{$row->summontant_paye}} $
+                                <br>@endforeach
+                                <b>@php $rest = $montanttotal - $montantpayer  @endphp Montant Restant </b> : {{$rest}} $
+                                <br>
+                                </p>
+                                <p>
+                                                                   </p>
    
                             </div>
                         </div>
@@ -519,6 +520,7 @@
                                                           <th>Intitulé</th>
                                                           <th>Description</th>
                                                           <th>Quantite</th>
+                                                          <th>cubage</th>
                                                           <th>Montant</th>
                                                           <th>créé le</th>
                                                       </tr>
@@ -529,7 +531,22 @@
                                                           <td class="text-center">{{$row->id}}</td>
                                                           <td class="text-primary">{{$row->intituler}}</td>
                                                           <td class="text-primary">{{$row->description}}</td>
-                                                          <td>{{$row->quatite}}</td>
+                                                          <td>@php
+                                                              $quantite = $row->quatite;
+                                                              $waybill_quantite = $row->waybill_quantite;
+
+                                                              $totot_quantie = $quantite - $waybill_quantite;
+                                                          @endphp
+                                                            
+                                                            {{$totot_quantie}}</td>
+                                                          <td>
+                                                            @php
+                                                              $cubage = $row->cubage;
+                                                              $waybill_cubage = $row->waybill_cubage;
+
+                                                              $totot_cubage = $cubage - $waybill_cubage;
+                                                          @endphp
+                                                            {{$totot_cubage}}</td>
                                                           <td>{{$row->prix_unitaire}}</td>
                                                           
                                                           <td> {{$row->created_at}}</td>
@@ -636,24 +653,20 @@
                                                 <thead>
                                                       <tr>
                                                           <th class="text-center">#</th>
-                                                          <th>Matricule</th>
-                                                          <th>Chauffeur</th>
-                                                          <th>Article</th>
+                                                          <th>Metrecube</th>
                                                           <th>Quantite</th>
-                                                          <th>Montant</th>
+                                                          <th>Destination</th>
                                                           <th>créé le</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
                                                     @foreach ($waybills as $row) 
                                                     <tr>
-                                                          <td class="text-center">{{$row->id}}</td>
-                                                          <td class="text-primary">{{$row->matricule}}</td>
-                                                          <td class="text-primary">{{$row->matricule}}</td>
-                                                          <td class="text-primary">{{$row->intituler}}</td>
-                                                          <td>{{$row->quatite}}</td>
-                                                          <td>{{$row->prix_unitaire}}</td>
-                                                          
+                                                          <td class="text-center">{{$row->id}}</td> 
+                                                          <td class="text-primary">{{$row->quantite}}</td>
+
+                                                          <td class="text-primary">{{$row->metrecube}}</td>
+                                                          <td>{{$row->destination}}</td>         
                                                           <td> {{$row->created_at}}</td>
                                                       </tr>
                                                       @endforeach
@@ -843,6 +856,7 @@
                         <form method="POST" action="{{url('/ajout/ajoutwaybill')}}" enctype="multipart/form-data">
                             @csrf
                         <h5 class="modal-title" id="exampleModalLabel">Generation d'un Waybill</h5>
+                     
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
@@ -855,7 +869,7 @@
                         <div class="form-group mb-4">
                             <label for="exampleFormControlSelect1">Marchandises </label>
                             
-                            <select name="intituler" class="form-control nested">
+                            <select name="idmarchandises" class="form-control nested">
                                   <optgroup label="Liste des marchandises">
                                      @foreach ($marchandise as $ross)
                                          
@@ -870,14 +884,18 @@
                                 </select>
                         </div>
                         <div class="form-group mb-4">
-                            <label for="exampleFormControlInput2reference">quantite </label>
-                            <input type="number" class="form-control" name="quantite" id="exampleFormControlInput2reference" placeholder="Metrecube à  transporter du waybill">
+                            <label for="exampleFormControlInput2reference">Metrecube </label>
+                            <input type="number" class="form-control" name="metrecube" id="exampleFormControlInput2reference" placeholder="Metrecube à  transporter du waybill">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlInput2referenc">Quantite </label>
+                            <input type="number" class="form-control" name="quantite" id="exampleFormControlInput2referenc" placeholder="Quantite à  transporter du waybill">
                         </div>
                   
                         <div class="form-group mb-4">
                             <label for="exampleFormControlSelect1">Vehicule </label>
                             
-                            <select name="intituler" class="form-control nested">
+                            <select name="idvehicule" class="form-control nested">
                                   <optgroup label="Liste des Vehicules">
                                      @foreach ($vehicules as $ross)
                                          
@@ -894,7 +912,7 @@
                         <div class="form-group mb-4">
                             <label for="exampleFormControlSelect1">Chauffeur </label>
                             
-                            <select name="intituler" class="form-control nested">
+                            <select name="idchauffeur" class="form-control nested">
                                   <optgroup label="Liste des chauffeurs">
                                      @foreach ($chauffeurs as $ross)
                                          
@@ -910,9 +928,9 @@
                         </div>
                         
                         <div class="form-group mb-4">
-                            <label for="exampleFormControlSelect1">Chauffeur </label>
+                            <label for="exampleFormControlSelect1">Destination </label>
                             
-                            <select name="intituler" class="form-control nested">
+                            <select name="destination" class="form-control nested">
                                   <optgroup label="Liste des destination">
                                     
                                          

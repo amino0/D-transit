@@ -271,9 +271,10 @@
                     </li> 
                     
                     <li class="menu single-menu ">
-                        <a href="#" class="dropdown-toggle">
+                        <a href="/stock" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                     
+                                           <span>Stock</span>
                             </div>
                         </a>
                       
@@ -300,10 +301,13 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="more" data-parent="#topAccordion">
                             <li>
-                                <a href="dragndrop_dragula.html"> Fournisseurs</a>
+                                <a href="{{url('/paramettre/fournisseur')}}"> Fournisseurs</a>
                             </li>
                             <li>
-                                <a href="widgets.html"> Vehicules </a>
+                                <a href="{{url('/paramettre/famille')}}"> Familles Articles </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/article')}}"> Articles </a>
                             </li>
                            
                         </ul>
@@ -418,13 +422,38 @@
                                         <div class="w-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                         </div>
-                                        <p class="w-value">31.6K</p>
-                                        <h5 class="">Followers</h5>
+                                    
+                                        <p class="w-value">
+                                            @foreach ($cotationtotal  as $row)
+                                            {{$row->cntdevis}}
+                                            @endforeach
+                                        </p>
+                                        <h5 class="">Cotation </h5>
                                     </div>
                                     <div class="widget-content">    
-                                        <div class="w-chart">
-                                            <div id="hybrid_followers"></div>
-                                        </div>
+                                        <ul>
+                                    <b><li>En attente d'article : @foreach ($cotationqttend  as $row)
+                                     
+                                            {{$row->cntdevis}}
+                                            @endforeach</p> </li> 
+                                            <li>En attente de soumission: @foreach ($cotationsoumis  as $row)
+                                     
+                                                {{$row->cntdevis}}
+                                                @endforeach</p> </li> 
+                                                <li>En attente du client: @foreach ($cotationqttend  as $row)
+                                     
+                                                    {{$row->cntdevis}}
+                                                    @endforeach</p> </li> 
+                                                    <li>Non traiter: @foreach ($cotationtraiter  as $row)
+                                     
+                                                        {{$row->cntdevis}}
+                                                        @endforeach</p> </li> 
+                                                        <li>Cloturer: @foreach ($cotationcloturer  as $row)
+                                     
+                                                            {{$row->cntdevis}}
+                                                            @endforeach</p> </li> 
+                                                    </b>
+                                                    </ul>
                                     </div>
                                 </div>
                             </div>
@@ -434,8 +463,11 @@
                                         <div class="w-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                                         </div>
-                                        <p class="w-value">1,900</p>
-                                        <h5 class="">Referral</h5>
+                                        <p class="w-value">@foreach ($commande  as $row)
+                                     
+                                            {{$row->cntdevis}}
+                                            @endforeach</p>
+                                        <h5 class="">Commande</h5>
                                     </div>
                                     <div class="widget-content">    
                                         <div class="w-chart">
@@ -450,8 +482,11 @@
                                         <div class="w-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                         </div>
-                                        <p class="w-value">18.2%</p>
-                                        <h5 class="">Engagement</h5>
+                                        <p class="w-value">@foreach ($marchandises  as $row)
+                                     
+                                            {{$row->cntdevis}}
+                                            @endforeach</p>
+                                        <h5 class="">Marchandises</h5>
                                     </div>
                                     <div class="widget-content">    
                                         <div class="w-chart">

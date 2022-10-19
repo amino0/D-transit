@@ -264,9 +264,10 @@
                     </li> 
                     
                     <li class="menu single-menu ">
-                        <a href="#" class="dropdown-toggle">
+                        <a href="/stock" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                     
+                                           <span>Stock</span>
                             </div>
                         </a>
                       
@@ -324,10 +325,9 @@
                                         <thead>
                                             <tr>
                                                 <th class="checkbox-column"> Record </th>
-                                                <th>Id commande  </th>
-                                                <th>Nom fourniseur </th>
+                                                <th>Bill of landing </th>
                                                 <th>Num Cotation </th>
-                                                <th>Montant total</th>
+                                                <th>Fournisseur </th>
                                                 <th class="text-center">Statut</th>
                                                 <th>Créée le</th>
                                                 
@@ -340,11 +340,10 @@
                                             
                                             <tr>
                                                 <td class="checkbox-column"> {{$row->id}} </td>
-                                                <td>{{$row->id}}</td>
-                                                <td>{{$row->nom_fourniseur}}</td>
+                                                <td>{{$row->bl}}</td>
                                                 <td>{{$row->id_devis}}</td>
                                                 <td> 
-                                                    {{$row->prix_convenu}}
+                                                    {{$row->nom_fourniseur}}
                                                 </td>
                                                 <td>@if ($row->status == 1 )
                                                     <span class=' shadow-none badge outline-badge-warning'>En attente </span>

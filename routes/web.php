@@ -5,6 +5,7 @@ use App\Http\Controllers\DossierController;
 use App\Http\Controllers\FacturesController;
 use App\Http\Controllers\stockcontroller;
 use App\Http\Controllers\homecontroller;
+use App\Http\Controllers\paramettrecontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,4 +73,14 @@ Route::post('/client/new', [clientController::class, 'addclient']);
 */
 Route::group(['prefix' => 'dossiers'], function () {
     Route::get('/', [DossierController::class, 'index']);
+});
+Route::group(['prefix' => 'paramettre'], function () {
+    Route::get('/fournisseur', [paramettrecontroller::class, 'allfournisseur']);
+    Route::post('/fournisseur/add', [paramettrecontroller::class, 'newfournisseur']);
+
+    Route::get('/famille', [paramettrecontroller::class, 'allfamille']);
+    Route::post('/famille/add', [paramettrecontroller::class, 'newfamille']);
+
+    Route::get('/article', [paramettrecontroller::class, 'allarticle']);
+    Route::post('/article/add', [paramettrecontroller::class, 'newarticle']);
 });

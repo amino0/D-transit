@@ -276,9 +276,10 @@
                     </li> 
                     
                     <li class="menu single-menu ">
-                        <a href="#" class="dropdown-toggle">
+                        <a href="/stock" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                     
+                                           <span>Stock</span>
                             </div>
                         </a>
                       
@@ -336,8 +337,20 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="t-text">Nom du fourniseur</label>
-                                        <input id="t-text" type="text" name="nom"  placeholder="nom complet ou accromine" class="form-control" required>
-                                    </div>
+                                    <select name="nom" class="form-control nested">
+                                        @foreach ($fournisseurs as $row )
+                                            
+                                                 
+                                             
+                                             <option value="{{$row->id}}" >{{$row->nom_fournisseurs}}</option>
+                                            
+                                             @endforeach
+
+                                             
+                                        </select>
+  
+                                    
+                                     </div>
                                 <!--     
                                     <div class="form-group">
                                         <label for="n-text">Prix souhaite</label>

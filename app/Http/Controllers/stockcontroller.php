@@ -9,8 +9,7 @@ class stockcontroller extends Controller
 {
     public function index()
     {
-        $marchandises =  DB::select("SELECT famille_articles.`nom_famille`,`marchandises`.id_famille,SUM(cubage) as sumcubage FROM `marchandises`,`famille_articles` where `marchandises`.`id_famille` = famille_articles.id group by famille_articles.`nom_famille`;
-        ");
+        $marchandises =  DB::select("SELECT famille_articles.`nom_famille`,`marchandises`.id_famille,SUM(cubage) as sumcubage FROM `marchandises`,`famille_articles` where `marchandises`.`id_famille` = famille_articles.id group by famille_articles.`nom_famille`;");
 
         return view('stock.index', compact('marchandises'));
     }
