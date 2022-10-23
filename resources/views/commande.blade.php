@@ -368,6 +368,23 @@
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
         
                                                      </button>
+
+                                                    </li>
+                                                    <li  class="contacts-block__item">
+                                                        @foreach ($commande as $row)
+                                                            
+                                                        
+                                                     <form action="{{url("/fiche")}}" method="POST">
+                                                    @csrf
+
+                                                        <input type="hidden" name="idcommande" value="{{$row->id}}">
+                                                        <button type="submit" class="btn btn-primary mb-2 mr-2" data-toggle="modal" data-target="#ajoutfiche">
+                                                            Fiche recapitulatif
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-crosshair"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+            
+                                                         </button>                                                    
+                                                        </form>    
+                                                        @endforeach
                                                     </li>
 
                                                                                                                                                
@@ -407,7 +424,7 @@
                         <div class="skills layout-spacing  ">
                             <div class="widget-content widget-content-area">
                                 
-                                <h3 class="">Bill of landing :@foreach ($commande as $row) <b>{{$row->bl}}</b>  @endforeach
+                                <h3 class="">Bill of lading :@foreach ($commande as $row) <b>{{$row->bl}}</b>  @endforeach
                                 </h3>  
                                                         
                             <p>  <b>Fournisseur </b> :  {{$row->nom_fourniseur}}
@@ -531,11 +548,13 @@
                                                           <td class="text-center">{{$row->id}}</td>
                                                           <td class="text-primary">{{$row->intituler}}</td>
                                                           <td class="text-primary">{{$row->description}}</td>
-                                                          <td>@php
+                                                          <td>
+                                                          @php
                                                               $quantite = $row->quatite;
                                                               $waybill_quantite = $row->waybill_quantite;
 
                                                               $totot_quantie = $quantite - $waybill_quantite;
+                                                          
                                                           @endphp
                                                             
                                                             {{$totot_quantie}}</td>

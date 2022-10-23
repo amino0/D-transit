@@ -314,14 +314,14 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Liste des Familles d'article </h4>
+                                        <h4>Liste des types d'article </h4>
                                     </div>
                                 </div>
                             </div>
                            
                             <div class="widget-content widget-content-area">
                             <div style="float: right">    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajoutfournissuer">
-                                    Ajout d'une famille
+                                    Ajout d'un article
     
                                  </button>
                                 </div>
@@ -333,19 +333,18 @@
                                                 <th>Nom </th>
                                                 <th>Cree le </th>
                                                 
-                                                <th class="text-center">Nb article</th>
+                                                <th class="text-center">Famille</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             
-                                            @foreach ($familles as $row)
+                                            @foreach ($allarticle as $row)
                                           <tr>
                                                 <td></td>
-                                                <td>{{$row->nom_famille}}</td>
+                                                <td>{{$row->ds_type_article}}</td>
                                                 <td>{{$row->created_at}}</td>
-                                                <td class="text-center">
-                                                    <span class=' shadow-none badge outline-badge-primary'> 10 article </span>
-                                                </td>
+                                                <td class="text-center">{{$row->id_famille}}</td>
+                                               
                                             
                                             </tr>
                                                    
@@ -363,21 +362,30 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ajout d'une famille</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Ajout d'un article</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
                     </div>
                     <div class="modal-body">
                         
-                    <form method="POST" action="{{url('/paramettre/famille/add')}}">
+                    <form method="POST" action="{{url('/paramettre/article/add')}}">
                         @csrf
                         <div class="form-group mb-4">
-                            <label for="exampleFormControlInput2">Nom ou accronime</label>
-                            <input type="text" name="nom_fourni" class="form-control" id="exampleFormControlInput2" placeholder="nom de la famille d'article" required>
+                            <label for="exampleFormControlInput2">Nom de l'article</label>
+                            <input type="text" name="nom_article" class="form-control" id="exampleFormControlInput2" placeholder="nom de l'article" required>
                         </div>
-                       
-                       
+                        <div class="form-group mb-4">
+                        <label for="exampleFormControlSelect1">Famille </label>
+                            
+                        <select name="id_famille" class="form-control  basic">
+                          
+                            @foreach ($familles as $row)
+                            <option value="{{$row->id}}" >{{$row->nom_famille}} </option>
+                            @endforeach
+                         
+                          </select>
+                    </div>
                         
                         
 

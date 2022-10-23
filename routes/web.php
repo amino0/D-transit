@@ -83,4 +83,11 @@ Route::group(['prefix' => 'paramettre'], function () {
 
     Route::get('/article', [paramettrecontroller::class, 'allarticle']);
     Route::post('/article/add', [paramettrecontroller::class, 'newarticle']);
+
+    Route::get('/chauffeurs', [paramettrecontroller::class, 'allchauffeur']);
+    Route::post('/chauffeurs/add', [paramettrecontroller::class, 'newchauffeur']);
+
+    Route::get('/vehicules', [paramettrecontroller::class, 'allvehicules']);
+    Route::post('/vehicules/add', [paramettrecontroller::class, 'newvehicules']);
 });
+Route::post('/fiche', [homecontroller::class, 'generate_fiche']);

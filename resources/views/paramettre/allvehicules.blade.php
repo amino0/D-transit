@@ -253,7 +253,7 @@
                         </a>
                       
                     </li>
-                    <li class="menu single-menu active">
+                    <li class="menu single-menu ">
                         <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -263,11 +263,10 @@
                       
                     </li> 
                     
-                    <li class="menu single-menu ">
-                        <a href="/stock" class="dropdown-toggle">
+                    <li class="menu single-menu  ">
+                        <a href="{{url('/stock')}}" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                     
-                                           <span>Stock</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
                             </div>
                         </a>
                       
@@ -282,7 +281,7 @@
                       
                     </li> 
 
-                    <li class="menu single-menu">
+                    <li class="menu single-menu active">
                         <a href="#more" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
@@ -292,7 +291,7 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="more" data-parent="#topAccordion">
                             <li>
-                                <a href="dragndrop_dragula.html"> Fournisseurs</a>
+                                <a href="{{url('/paramettre/fournisseur')}}"> Fournisseurs</a>
                             </li>
                             <li>
                                 <a href="widgets.html"> Vehicules </a>
@@ -315,46 +314,44 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Liste des Commandes </h4>
+                                        <h4>Liste des types d'article </h4>
                                     </div>
                                 </div>
                             </div>
+                           
                             <div class="widget-content widget-content-area">
+                            <div style="float: right">    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajoutfournissuer">
+                                    Ajout d'un article
+    
+                                 </button>
+                                </div>
                                 <div class="table-responsive mb-4">
                                     <table id="style-2" class="table style-2  table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="checkbox-column"> Record </th>
-                                                <th>Bill of lading </th>
-                                                <th>Num Cotation </th>
-                                                <th>Fournisseur </th>
-                                                <th class="text-center">Statut</th>
-                                                <th>Créée le</th>
+                                                <th></th>
+                                                <th>Marque </th>
+                                                <th>Année </th>
+                                                <th>Type de vehicule </th>
+                                                <th>Cree le </th>
                                                 
-                                                <th class="text-center">Action</th>
+                                                <th class="text-center">Famille</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($commade as $row)
-                                                
                                             
-                                            <tr>
-                                                <td class="checkbox-column"> {{$row->id}} </td>
-                                                <td>{{$row->bl}}</td>
-                                                <td>{{$row->id_devis}}</td>
-                                                <td> 
-                                                    {{$row->nom_fourniseur}}
-                                                </td>
-                                                <td>@if ($row->status == 1 )
-                                                    <span class=' shadow-none badge outline-badge-warning'>En attente </span>
-                                                   
-                                                    @endif</td>
+                                            @foreach ($vehicules as $row)
+                                          <tr>
+                                                <td></td>
+                                                <td>{{$row->marque}}</td>
+                                                <td>{{$row->annee}}</td>
+                                                <td>{{$row->type}}</td>
+                                                <td>{{$row->numero_plaque}}</td>
                                                 <td>{{$row->created_at}}</td>
-                                                
-                                                <td class="text-center">
-                                                    <a href="{{url("/commandes/$row->id")}}" class="btn btn-outline-primary"  >Voir</a></td>
+                                            
                                             </tr>
-                                            @endforeach
+                                                   
+                                             @endforeach         
                                         </tbody>
                                     </table>
                                 </div>
@@ -363,7 +360,69 @@
                     </div>
                 </div>
 
-                
+                 <!-- Modal paiement  -->
+           <div class="modal fade" id="ajoutfournissuer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajout d'un article</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    <form method="POST" action="{{url('/paramettre/article/add')}}">
+                        @csrf
+                        <div class="form-group mb-4">
+                            <label for="exampleFormControlInput2">marque du Vehicule</label>
+                            <input type="text" name="marque" class="form-control" id="exampleFormControlInput2" placeholder="IzUzU, Tesla.. etc " required>
+                        </div>
+                    <div class="form-group mb-4">
+                        <label for="exampleFormControlSelect1">Années de voiture </label>
+                            
+                        <select name="annee" class="form-control  basic">
+                          
+                           
+                            <option value="2022" >2022</option>
+                            <option value="2021" >2021</option>
+                            <option value="2020" >2020</option>
+                            <option value="2019" >2019</option>
+                            <option value="2018" >2018</option>
+                            <option value="2017" >2017</option>
+                            <option value="2016" >2016</option>
+                            <option value="2015" >2015</option>
+                            <option value="2014" >2014</option>
+                            <option value="2013" >2013</option>
+                            <option value="2012" >2012</option>
+                            <option value="2011" >2011</option>
+                            <option value="2010" >2010</option>
+                            <option value="2009" >2009</option>
+                            <option value="2008" >2008</option>
+                            <option value="2007" >2007</option>
+                            <option value="2006" >2006</option>
+                            <option value="2005" >2005</option>
+                            <option value="2004" >2004</option>
+                            <option value="2003" >2003</option>
+                          
+                         
+                          </select>
+                    </div>
+                        
+                        
+
+                        
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annule</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>     
+        <!-- End Modal paiement  -->
                
                 </div>
         <div class="footer-wrapper">

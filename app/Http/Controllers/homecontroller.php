@@ -333,7 +333,7 @@ class homecontroller extends Controller
         $fileModel->save();
         return redirect("/commandes/$idcommandee");
     }
-    public function ajoutwaybill()
+    public function ajoutwaybill(Request $request)
     {
         $idcommandee = request('idcommande');
         $quantite = request('quantite');
@@ -359,11 +359,14 @@ class homecontroller extends Controller
         $vehicules =  DB::select("SELECT * FROM `vehicules` WHERE  id =  $idvehicule ");
         $chauffeurs =  DB::select("SELECT * FROM `chauffeurs` WHERE  id =  $idchauffeur ");
         $marchandises =  DB::select("SELECT * FROM `marchandises` WHERE  id =  $idmarchandises ");
+        foreach ($marchandises as $row) {
+            $cutot = $row->waybill_cubage;
+        }
         $waybills =  DB::select("SELECT * FROM `waybills` WHERE  id =  $idwaybill ");
-
-        DB::table('marchandises')->where('id', $idwaybill)->update(array(
+        $test = $metrecube + $cutot;
+        DB::table('marchandises')->where('id_commande', $idcommandee)->update(array(
             'waybill_quantite' => $quantite,
-            'waybill_cubage' => $metrecube,
+            'waybill_cubage' => $test,
         ));
         $qrcode = base64_encode(QrCode::format('svg')->size(300)
             ->generate("https://dheemangroup.com/show/"));
@@ -371,5 +374,22 @@ class homecontroller extends Controller
 
         $pdf = PDF::loadView(('pdf_waybill'), compact('qrcode', 'vehicules', 'waybills', 'chauffeurs', 'marchandises'));
         return $pdf->download("waybill.pdf");
+    }
+    public function generate_fiche(Request $request)
+    {
+        $id = request('idcommande');
+        $date = now();
+        $paiements =  DB::select("SELECT * FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null  ");
+        $debours =  DB::select("SELECT * FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null  ");
+        $sumdebours =  DB::select("SELECT SUM(`debourds`.`prix`) as `sumprix` FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null  ");
+        $marchandise =  DB::select("SELECT * FROM `marchandises` WHERE  cubage is not null and `id_commande` = $id ");
+        $cubemarchandise =  DB::select("SELECT SUM(`marchandises`.`cubage`) as cubagesum FROM `marchandises` WHERE  cubage is not null and `id_commande` = $id ");
+        $waybills =  DB::select("SELECT * FROM `waybills` WHERE `waybills`.`id_commande` = $id ");
+        $commande =  DB::select("SELECT * FROM `commandes` WHERE `commandes`.`id`= $id and `deleted_at` is null ");
+        $sumcommande =  DB::select("SELECT SUM( `cubage`*`prix_unitaire`) as sumtotal, `commandes`.`id` , `commandes`.`id_devis`,`commandes`.`nom_fourniseur`,`commandes`.`status`,`commandes`.`created_at` FROM `marchandises`,`commandes` WHERE `commandes`.`id` = `marchandises`.`id_commande` and `commandes`.`id` = $id  GROUP BY `commandes`.`id` and `commandes`.`id_devis`and  `commandes`.`nom_fourniseur` and `commandes`.`status` and `commandes`.`created_at` ");
+        $summontant_paye =  DB::select("SELECT  SUM( `montant_paye`) as summontant_paye FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null   ");
+
+        $pdf = PDF::loadView(('pdf_fiche'), compact('paiements', 'cubemarchandise', 'sumdebours', 'summontant_paye', 'sumcommande', 'debours', 'marchandise', 'waybills', 'commande'));
+        return $pdf->download("fiche$date.pdf");
     }
 }

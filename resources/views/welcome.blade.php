@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>CORK Admin - Multipurpose Bootstrap Dashboard Template </title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="{{asset('template/assets/img/favicon.ico')}}"/>
     <link href="{{asset('template/assets/css/loader.css')}}" rel="stylesheet" type="text/css" />
     <script src="{{asset('template/assets/js/loader.js')}}"></script>
 
@@ -308,6 +308,12 @@
                             </li>
                             <li>
                                 <a href="{{url('/paramettre/article')}}"> Articles </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/chauffeurs')}}"> Chauffeurs </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/vehicules')}}"> Vehicule </a>
                             </li>
                            
                         </ul>

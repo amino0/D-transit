@@ -421,7 +421,7 @@
                                                             
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="platform-title2">Bill of Landing reference  </label> <br>
+                                                            <label for="platform-title2">Bill of Lading reference  </label> <br>
                                                             <input type="text" name="bl"  class="form-control mb-4" id="platform-title2" placeholder="le bill of landing "  >
                                                             
                                                         </div>
