@@ -269,7 +269,9 @@ class homecontroller extends Controller
         $marchandise =  DB::select("SELECT * FROM `marchandises` WHERE  cubage is not null and `id_commande` = $id ");
         $vehicules =  DB::select("SELECT * FROM `vehicules` WHERE  status is null ");
         $chauffeurs =  DB::select("SELECT * FROM `chauffeurs` WHERE  status is null ");
-        return view('commande', compact('chauffeurs', 'commande', 'vehicules', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye', 'marchandise', 'type_debours'));
+        $sumdebours =  DB::select("SELECT SUM(`debourds`.`prix`) as `sumprix` FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null and `status` = 1 ");
+
+        return view('commande', compact('chauffeurs', 'sumdebours', 'commande', 'vehicules', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye', 'marchandise', 'type_debours'));
     }
     public function ajoutpaiement(Request $request)
     {
@@ -323,9 +325,23 @@ class homecontroller extends Controller
         $type_debours = request('type');
 
         // dd($idcommande);
-
+        if ($request->file()) {
+            $request->validate([
+                'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
+            ]);
+            $fileModel = new Debourd;
+            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+            $fileModel->filename = time() . '_' . $request->file->getClientOriginalName();
+            $fileModel->intituler = $intituler;
+            $fileModel->prix = $prix;
+            $fileModel->type_debours = $type_debours;
+            $fileModel->id_commande = $idcommandee;
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->save();
+            return redirect("/commandes/$idcommandee");
+        }
         $fileModel = new Debourd;
-
         $fileModel->intituler = $intituler;
         $fileModel->prix = $prix;
         $fileModel->type_debours = $type_debours;
@@ -381,7 +397,7 @@ class homecontroller extends Controller
         $date = now();
         $paiements =  DB::select("SELECT * FROM `paiements` WHERE `paiements`.`id_commande`= $id and `deleted_at` is null  ");
         $debours =  DB::select("SELECT * FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null  ");
-        $sumdebours =  DB::select("SELECT SUM(`debourds`.`prix`) as `sumprix` FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null  ");
+        $sumdebours =  DB::select("SELECT SUM(`debourds`.`prix`) as `sumprix` FROM `debourds` WHERE `debourds`.`id_commande`= $id and `deleted_at` is null and `status` = 1 ");
         $marchandise =  DB::select("SELECT * FROM `marchandises` WHERE  cubage is not null and `id_commande` = $id ");
         $cubemarchandise =  DB::select("SELECT SUM(`marchandises`.`cubage`) as cubagesum FROM `marchandises` WHERE  cubage is not null and `id_commande` = $id ");
         $waybills =  DB::select("SELECT * FROM `waybills` WHERE `waybills`.`id_commande` = $id ");
@@ -391,5 +407,90 @@ class homecontroller extends Controller
 
         $pdf = PDF::loadView(('pdf_fiche'), compact('paiements', 'cubemarchandise', 'sumdebours', 'summontant_paye', 'sumcommande', 'debours', 'marchandise', 'waybills', 'commande'));
         return $pdf->download("fiche$date.pdf");
+    }
+    public function confirmerdebours($id)
+    {
+        $datemodif = now();
+        DB::table('debourds')
+            ->where('id', $id)
+            ->update([
+                'status' => 1,
+                'updated_at' => $datemodif,
+            ]);
+        $debourds =  DB::select("SELECT * FROM `debourds` WHERE `debourds`.`id`= $id ");
+        foreach ($debourds as $row) {
+            $id_commande = $row->id_commande;
+        }
+        return redirect("/commandes/$id_commande");
+    }
+    public function supprimerdocuments($id)
+    {
+
+        $documents =  DB::select("SELECT * FROM `documents` WHERE `documents`.`id`= $id ");
+        foreach ($documents as $row) {
+            $id_commande = $row->id_commande;
+        }
+        DB::table('documents')
+            ->where('id', $id)
+            ->update([
+                'deleted_at' => 1,
+            ]);
+        return redirect("/commandes/$id_commande");
+    }
+    public function supprimerdebours($id)
+    {
+        $debourds =  DB::select("SELECT * FROM `debourds` WHERE `debourds`.`id`= $id ");
+        foreach ($debourds as $row) {
+            $id_commande = $row->id_commande;
+        }
+        DB::table('debourds')
+            ->where('id', $id)
+            ->update([
+                'deleted_at' => 1,
+            ]);
+        return redirect("/commandes/$id_commande");
+    }
+    public function confirmerdocuments($id)
+    {
+        $datemodif = now();
+        DB::table('documents')
+            ->where('id', $id)
+            ->update([
+                'status' => 1,
+                'updated_at' => $datemodif,
+            ]);
+        $documents =  DB::select("SELECT * FROM `documents` WHERE `documents`.`id`= $id ");
+        foreach ($documents as $row) {
+            $id_commande = $row->id_commande;
+        }
+        return redirect("/commandes/$id_commande");
+    }
+    public function supprimerpaiement($id)
+    {
+        $debourds =  DB::select("SELECT * FROM `paiements` WHERE `paiements`.`id`= $id ");
+        foreach ($debourds as $row) {
+            $id_commande = $row->id_commande;
+        }
+        DB::table('paiements')
+            ->where('id', $id)
+            ->update([
+                'deleted_at' => 1,
+            ]);
+        return redirect("/commandes/$id_commande");
+    }
+    public function confirmerpaiement($id)
+    {
+        $datemodif = now();
+        DB::table('paiements')
+            ->where('id', $id)
+            ->update([
+                'status' => 1,
+                'updated_at' => $datemodif,
+            ]);
+        $documents =  DB::select("SELECT * FROM `paiements` WHERE `paiements`.`id`= $id ");
+        foreach ($documents as $row) {
+            $id_commande = $row->id_commande;
+        }
+        return redirect("/commandes/$id_commande");
     }
 }

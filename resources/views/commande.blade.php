@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - User Profile</title>
+    <title>D-Import & Export - Dheeman Group</title>
     <link rel="icon" type="image/x-icon" href="{{asset('template/assets/img/favicon.ico')}}"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
@@ -19,7 +19,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('template/plugins/bootstrap-select/bootstrap-select.min.css')}}">
     <link href="{{asset('template/plugins/flatpickr/flatpickr.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template/plugins/noUiSlider/nouislider.min.css')}}" rel="stylesheet" type="text/css">
-    
+    <link href="{{asset('template/assets/css/tables/table-basic.css')}}" rel="stylesheet" type="text/css" />
+
     <!-- END PAGE LEVEL PLUGINS -->
    
     <!--  BEGIN CUSTOM STYLE FILE  -->
@@ -443,11 +444,20 @@
                                 @endphp 
                                 {{$row->summontant_paye}} $
                                 <br>@endforeach
+                                <b> <br> Total Debours :  </b> @foreach ($sumdebours as $row)
+                                    <b>{{$row->sumprix}} </b> Djf  <b>@php
+                                        $tot = $row->sumprix/177.75; 
+                                        echo round($tot,2);
+                                    @endphp
+                                    </b>
+                                    $
+                                @endforeach
+                                <br>
                                 <b>@php $rest = $montanttotal - $montantpayer  @endphp Montant Restant </b> : {{$rest}} $
                                 <br>
                                 </p>
                                 <p>
-                                                                   </p>
+                                </p>
    
                             </div>
                         </div>
@@ -587,6 +597,7 @@
                                                           <th>Montant</th>
                                                           <th>N° compte</th>
                                                           <th>Créé le</th>
+                                                          <th>Action</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
@@ -597,7 +608,15 @@
                                                           <td>{{$row->montant_paye}}</td>
                                                           <td>{{$row->numero_compte}}</td>
                                                           <td>{{$row->created_at}}</td>
-                                                         
+                                                         <td> <ul class="table-controls">
+                                                            @if ($row->status == null)
+                                                             <li><a href="{{url("/confirmer/paiement/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Confirmer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></a> </li>
+                                                             <li></li>
+                                                             <li><a href="{{url("/supprimer/paiement/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Supprimer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
+                                                            @elseif ($row->status == 1)
+                                                             <li><a href="{{url("/supprimer/paiement/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Supprimer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
+                                                            @endif
+                                                         </ul> </td>
                                                       </tr>
                                                       @endforeach
                                                   </tbody>
@@ -611,22 +630,49 @@
                                                 <caption>Listes des debours </caption>
                                                 <thead>
                                                       <tr>
-                                                          <th class="text-center">#</th>
                                                           <th>Type</th>
                                                           <th>Montant</th>
+                                                          <th>PJ</th>
                                                           <th>Créé le</th>
+                                                          <th>Action</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
                                                     @foreach ($debours as $row) 
                                                     <tr>
-                                                          <td class="text-center">{{$row->id}}</td>
                                                           <td>{{$row->type_debours}}</td>
                                                           <td>{{$row->prix}}</td>
                                                           
+                                                          <td>@if ($row->filename != null)
+                                                            <a href="{{"$row->file_path"}}" target='__blanc'> Voir 
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                        </a>
+                                                          @endif </td>
                                                           <td> {{$row->created_at}}</td>
+                                                          <td>
+                                                            <ul class="table-controls">
+                                                               @if ($row->status == null)
+                                                                <li><a href="{{url("/confirmer/debours/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Confirmer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></a> </li>
+                                                                <li></li>
+                                                                <li><a href="{{url("/supprimer/debours/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Supprimer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
+                                                               @elseif ($row->status == 1)
+                                                                <li><a href="{{url("/supprimer/debours/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Supprimer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
+                                                               @endif
+                                                            </ul> 
+                                                        </td>
                                                       </tr>
+                                                    
                                                       @endforeach
+                                                      <tr>
+                                                        <td><b>Total</b></td>
+                                                       <td> @foreach ($sumdebours as $row)
+                                                         <b>   {{$row->sumprix}}  Djf </b>
+                                                        @endforeach
+                                                    </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td> </td>
+                                                      </tr>
                                                   </tbody>
                                               </table>
                                         </div>
@@ -643,6 +689,7 @@
                                                           <th>Type</th>
                                                           <th>Voir</th>
                                                           <th>créé le</th>
+                                                          <th>Action</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
@@ -658,6 +705,15 @@
                                                         </a> </td>
                                                           
                                                           <td> {{$row->created_at}}</td>
+                                                          <td> <ul class="table-controls">
+                                                            @if ($row->status == null)
+                                                             <li><a href="{{url("/confirmer/documents/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Confirmer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></a> </li>
+                                                             <li></li>
+                                                             <li><a href="{{url("/supprimer/documents/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Supprimer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
+                                                            @elseif ($row->status == 1)
+                                                             <li><a href="{{url("/supprimer/documents/$row->id")}}" data-toggle="tooltip" data-placement="top" title="Supprimer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
+                                                            @endif
+                                                         </ul> </td>
                                                       </tr>
                                                       @endforeach
                                                   </tbody>
@@ -784,10 +840,10 @@
                             
                             <select name="type" class="form-control  basic">
                                
-                               <option value="000151" >Dechargement </option>
-                               <option value="000151" >Get pass </option>
-                               <option value="000151" >STGD</option>
-                               <option value="000151" >Autre</option>
+                               <option value="Dechargement" >Dechargement </option>
+                               <option value="Get pass" >Get pass </option>
+                               <option value="STGD" >STGD</option>
+                               <option value="Autre" >Autre</option>
                              
                               </select>
                         </div>
@@ -840,17 +896,16 @@
                              
                               </select>
                         </div>
-                     <!--   <div class="form-group mb-4">
-                            <label for="exampleFormControlInput2reference">Intitulé </label>
-                            <input type="text" class="form-control" name="intituler" id="exampleFormControlInput2reference" placeholder="ref du document">
-                        </div>
-                    -->
+                      
                         <div class="form-group mb-4">
                             <label for="exampleFormControlInput2reference">montant</label>
                             <input type="number" class="form-control" name="montant" id="exampleFormControlInput2reference" placeholder="le momtant du debours">
                         </div>
                         
-                        
+                        <div class="form-group mb-4 mt-3">
+                            <label for="exampleFormControlFile4">Impoter le doc Debours>
+                            <input type="file" name="file" class="form-control-file" id="exampleFormControlFile4">
+                        </div>
 
                         <div class="form-group mb-4">
                             <label for="exampleFormControlTextarea1">Description</label>
@@ -1077,5 +1132,68 @@
     <script src="{{asset('template/plugins/flatpickr/custom-flatpickr.js')}}"></script>
     <script src="{{asset('template/plugins/noUiSlider/custom-nouiSlider.js')}}"></script>
     <script src="{{asset('template/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js')}}"></script>
+    <script src="{{asset('template/plugins/table/datatable/datatables.js')}}"></script>
+    <script src="{{asset('template/assets/js/custom.js')}}"></script>
+    <script>
+        // var e;
+        c1 = $('#style-1').DataTable({
+            headerCallback:function(e, a, t, n, s) {
+                e.getElementsByTagName("th")[0].innerHTML='<label class="new-control new-checkbox checkbox-outline-primary m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+            },
+            columnDefs:[ {
+                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
+                    return'<label class="new-control new-checkbox checkbox-outline-primary  m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+                }
+            }],
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5
+        });
+
+        multiCheck(c1);
+
+        c2 = $('#style-2').DataTable({
+            headerCallback:function(e, a, t, n, s) {
+                e.getElementsByTagName("th")[0].innerHTML='<label class="new-control new-checkbox checkbox-outline-primary m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+            },
+            columnDefs:[ {
+                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
+                    return'<label class="new-control new-checkbox checkbox-outline-primary  m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>'
+                }
+            }],
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5 
+        });
+
+        multiCheck(c2);
+
+        c3 = $('#style-3').DataTable({
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5
+        });
+
+        multiCheck(c3);
+    </script>
 </body>
 </html>

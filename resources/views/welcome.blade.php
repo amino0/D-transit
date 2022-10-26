@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin - Multipurpose Bootstrap Dashboard Template </title>
+        <title>D-Import & Export - Dheeman Group</title>
+
     <link rel="icon" type="image/x-icon" href="{{asset('template/assets/img/favicon.ico')}}"/>
     <link href="{{asset('template/assets/css/loader.css')}}" rel="stylesheet" type="text/css" />
     <script src="{{asset('template/assets/js/loader.js')}}"></script>
@@ -35,7 +36,7 @@
             <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
             <div class="nav-logo align-self-center">
-                <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name"> I&E HIRAB djbouti</span></a>
+                <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name"> D-Import & Export</span></a>
             </div>
 
             <ul class="navbar-item flex-row mr-auto">
@@ -235,7 +236,7 @@
                         </a>
                     </li>
                     <li class="nav-item theme-text">
-                        <a href="index.html" class="nav-link"> I&E transit </a>
+                        <a href="index.html" class="nav-link"> D-Import & Export - Dheeman Group </a>
                     </li>
                 </ul>
 
@@ -255,7 +256,7 @@
                         <a href="{{url('/devis')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                <span>Cotation</span>
+                                <span>Pre-Order</span>
                             </div>
                         </a>
                       
@@ -264,7 +265,7 @@
                         <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                <span>Commandes</span>
+                                <span>Bill of Lading</span>
                             </div>
                         </a>
                       
@@ -476,9 +477,29 @@
                                         <h5 class="">Commande</h5>
                                     </div>
                                     <div class="widget-content">    
-                                        <div class="w-chart">
-                                            <div id="hybrid_followers1"></div>
-                                        </div>
+                                        <ul>
+                                            <b><li>En attente d'article : @foreach ($cotationqttend  as $row)
+                                             
+                                                    {{$row->cntdevis}}
+                                                    @endforeach</p> </li> 
+                                                    <li>En attente de soumission: @foreach ($cotationsoumis  as $row)
+                                             
+                                                        {{$row->cntdevis}}
+                                                        @endforeach</p> </li> 
+                                                        <li>En attente du client: @foreach ($cotationqttend  as $row)
+                                             
+                                                            {{$row->cntdevis}}
+                                                            @endforeach</p> </li> 
+                                                            <li>Non traiter: @foreach ($cotationtraiter  as $row)
+                                             
+                                                                {{$row->cntdevis}}
+                                                                @endforeach</p> </li> 
+                                                                <li>Cloturer: @foreach ($cotationcloturer  as $row)
+                                             
+                                                                    {{$row->cntdevis}}
+                                                                    @endforeach</p> </li> 
+                                                            </b>
+                                                            </ul>
                                     </div>
                                 </div>
                             </div>
@@ -495,9 +516,29 @@
                                         <h5 class="">Marchandises</h5>
                                     </div>
                                     <div class="widget-content">    
-                                        <div class="w-chart">
-                                            <div id="hybrid_followers3"></div>
-                                        </div>
+                                        <ul>
+                                            <b><li>En attente d'article : @foreach ($cotationqttend  as $row)
+                                             
+                                                    {{$row->cntdevis}}
+                                                    @endforeach</p> </li> 
+                                                    <li>En attente de soumission: @foreach ($cotationsoumis  as $row)
+                                             
+                                                        {{$row->cntdevis}}
+                                                        @endforeach</p> </li> 
+                                                        <li>En attente du client: @foreach ($cotationqttend  as $row)
+                                             
+                                                            {{$row->cntdevis}}
+                                                            @endforeach</p> </li> 
+                                                            <li>Non traiter: @foreach ($cotationtraiter  as $row)
+                                             
+                                                                {{$row->cntdevis}}
+                                                                @endforeach</p> </li> 
+                                                                <li>Cloturer: @foreach ($cotationcloturer  as $row)
+                                             
+                                                                    {{$row->cntdevis}}
+                                                                    @endforeach</p> </li> 
+                                                            </b>
+                                                            </ul>
                                     </div>
                                 </div>
                             </div>

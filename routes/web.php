@@ -91,3 +91,9 @@ Route::group(['prefix' => 'paramettre'], function () {
     Route::post('/vehicules/add', [paramettrecontroller::class, 'newvehicules']);
 });
 Route::post('/fiche', [homecontroller::class, 'generate_fiche']);
+Route::get('/supprimer/debours/{id}', [homecontroller::class, 'supprimerdebours']);
+Route::get('/confirmer/debours/{id}', [homecontroller::class, 'confirmerdebours']);
+Route::get('/supprimer/documents/{id}', [homecontroller::class, 'supprimerdocuments']);
+Route::get('/confirmer/documents/{id}', [homecontroller::class, 'confirmerdocuments']);
+Route::get('/supprimer/paiement/{id}', [homecontroller::class, 'supprimerpaiement']);
+Route::get('/confirmer/paiement/{id}', [homecontroller::class, 'confirmerpaiement']);
