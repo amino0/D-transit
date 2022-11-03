@@ -30,7 +30,7 @@
             <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
             <div class="nav-logo align-self-center">
-                <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name"> I&E HIRAB djbouti</span></a>
+                <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('template/assets/img/90x90.jpg')}}"> <span class="navbar-brand-name"> D-Import & Export</span></a>
             </div>
 
             <ul class="navbar-item flex-row mr-auto">
@@ -230,7 +230,7 @@
                         </a>
                     </li>
                     <li class="nav-item theme-text">
-                        <a href="index.html" class="nav-link"> I&E transit </a>
+                        <a href="index.html" class="nav-link"> D-Import & Export - Dheeman Group </a>
                     </li>
                 </ul>
 
@@ -246,7 +246,7 @@
                        
                     </li>
 
-                    <li class="menu single-menu  ">
+                    <li class="menu single-menu active ">
                         <a href="{{url('/devis')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -255,7 +255,7 @@
                         </a>
                       
                     </li>
-                     <li class="menu single-menu ">
+                    <li class="menu single-menu ">
                         <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -264,6 +264,16 @@
                         </a>
                       
                     </li> 
+                    <li class="menu single-menu ">
+                        <a href="{{url('/fournisseur/commandes')}}" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                <span>Fournisseur</span>
+                            </div>
+                        </a>
+                      
+                    </li> 
+                    
                     <li class="menu single-menu ">
                         <a href="/stock" class="dropdown-toggle">
                             <div class="">
@@ -282,6 +292,7 @@
                         </a>
                       
                     </li> 
+                    
               
 
                     <li class="menu single-menu">
@@ -294,10 +305,19 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="more" data-parent="#topAccordion">
                             <li>
-                                <a href="dragndrop_dragula.html"> Fournisseurs</a>
+                                <a href="{{url('/paramettre/fournisseur')}}"> Fournisseurs</a>
                             </li>
                             <li>
-                                <a href="widgets.html"> Vehicules </a>
+                                <a href="{{url('/paramettre/famille')}}"> Familles Articles </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/article')}}"> Articles </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/chauffeurs')}}"> Chauffeurs </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/vehicules')}}"> Vehicule </a>
                             </li>
                            
                         </ul>

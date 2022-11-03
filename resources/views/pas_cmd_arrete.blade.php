@@ -428,7 +428,9 @@
                                                         <div class="form-group">
                                                             <label for="platform-title4">Date BL *  </label> <br>
                                                             <input type="date" name="datee"  class="form-control mb-4" id="platform-title4"   >
-                                                            
+                                                            @foreach ($devis as $row)
+                                                            <input type="hidden" name="fournisseur" value="{{$row->id_fournisseur}}">
+@endforeach
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="platform-title3">Nom client de la commande *  </label> <br>

@@ -270,6 +270,15 @@
                         </a>
                       
                     </li> 
+                    <li class="menu single-menu ">
+                        <a href="{{url('/fournisseur/commandes')}}" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                <span>Fournisseur</span>
+                            </div>
+                        </a>
+                      
+                    </li> 
                     
                     <li class="menu single-menu ">
                         <a href="/stock" class="dropdown-toggle">
@@ -352,27 +361,13 @@
                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
                         <div class="widget-four">
                             <div class="widget-heading">
-                                <h5 class="">Visitors by Browser</h5>
+                                <h5 class="">Etats du stock</h5>
                             </div>
                             <div class="widget-content">
                                 <div class="vistorsBrowser">
-                                    <div class="browser-list">
-                                        <div class="w-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chrome"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
-                                        </div>
-                                        <div class="w-browser-details">
-                                            <div class="w-browser-info">
-                                                <h6>Chrome</h6>
-                                                <p class="browser-count">65%</p>
-                                            </div>
-                                            <div class="w-browser-stats">
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 65%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                  @foreach ($marchandise_famille as $row)
+                                      
+                                  
                                     <div class="browser-list">
                                         <div class="w-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
@@ -380,13 +375,23 @@
                                         <div class="w-browser-details">
                                             
                                             <div class="w-browser-info">
-                                                <h6>Safari</h6>
-                                                <p class="browser-count">25%</p>
+                                                <h6>{{$row->intituler}}</h6>
+                                                @php
+                                                   $cubage_sorti =  $row->waybill_cubage;
+                                                   $cubage_total =  $row->cubage;
+                                                   $cubage_restant = $cubage_total - $cubage_sorti;
+                                                  
+                                                   $total_pourc = (1 - $cubage_sorti/$cubage_total)*100;
+                                                   $total_pourc = round($total_pourc,'2');
+                                                @endphp
+                                                <p class="browser-count">{{$total_pourc}}%</p>
+
+
                                             </div>
 
                                             <div class="w-browser-stats">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 35%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: {{$total_pourc}}%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
 
@@ -394,26 +399,7 @@
 
                                     </div>
 
-                                    <div class="browser-list">
-                                        <div class="w-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                        </div>
-                                        <div class="w-browser-details">
-                                            
-                                            <div class="w-browser-info">
-                                                <h6>Others</h6>
-                                                <p class="browser-count">15%</p>
-                                            </div>
-
-                                            <div class="w-browser-stats">
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+                                    @endforeach
                                     
                                 </div>
 
@@ -431,11 +417,11 @@
                                         </div>
                                     
                                         <p class="w-value">
-                                            @foreach ($cotationtotal  as $row)
-                                            {{$row->cntdevis}}
-                                            @endforeach
+                                            
                                         </p>
-                                        <h5 class="">Cotation </h5>
+                                        <h5 class="">Pre-Order : @foreach ($cotationtotal  as $row)
+                                            {{$row->cntdevis}}
+                                            @endforeach</h5>
                                     </div>
                                     <div class="widget-content">    
                                         <ul>
@@ -470,27 +456,27 @@
                                         <div class="w-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                                         </div>
-                                        <p class="w-value">@foreach ($commande  as $row)
+                                        <p class="w-value"></p>
+                                        <h5 class="">Commande : @foreach ($commande  as $row)
                                      
                                             {{$row->cntdevis}}
-                                            @endforeach</p>
-                                        <h5 class="">Commande</h5>
+                                            @endforeach</h5>
                                     </div>
                                     <div class="widget-content">    
                                         <ul>
-                                            <b><li>En attente d'article : @foreach ($cotationqttend  as $row)
+                                            <b><li>En Cours : @foreach ($cotationqttend  as $row)
                                              
                                                     {{$row->cntdevis}}
                                                     @endforeach</p> </li> 
-                                                    <li>En attente de soumission: @foreach ($cotationsoumis  as $row)
+                                                    <li>En attente de paiement: @foreach ($cotationsoumis  as $row)
                                              
                                                         {{$row->cntdevis}}
                                                         @endforeach</p> </li> 
-                                                        <li>En attente du client: @foreach ($cotationqttend  as $row)
+                                                        <li>En attente du Debours: @foreach ($cotationqttend  as $row)
                                              
                                                             {{$row->cntdevis}}
                                                             @endforeach</p> </li> 
-                                                            <li>Non traiter: @foreach ($cotationtraiter  as $row)
+                                                            <li>En attente Waybill: @foreach ($cotationtraiter  as $row)
                                              
                                                                 {{$row->cntdevis}}
                                                                 @endforeach</p> </li> 
@@ -509,11 +495,11 @@
                                         <div class="w-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                         </div>
-                                        <p class="w-value">@foreach ($marchandises  as $row)
+                                        <p class="w-value"></p>
+                                        <h5 class="">Paiement : @foreach ($paiement  as $row)
                                      
-                                            {{$row->cntdevis}}
-                                            @endforeach</p>
-                                        <h5 class="">Marchandises</h5>
+                                            {{$row->cntpaiement}}
+                                            @endforeach</h5>
                                     </div>
                                     <div class="widget-content">    
                                         <ul>
@@ -719,7 +705,7 @@
                                     </div>
                                 </div>
                                 <div class="progress">
-                                    <div class="progress-bar bg-gradient-secondary" role="progressbar" style="width: 57%" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-gradient-secondary" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>

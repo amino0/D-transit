@@ -10,19 +10,24 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Foreach_;
+use TCG\Voyager\Alert;
 
 class homecontroller extends Controller
 {
     public function homepage()
     {
         $cotationtotal  =  DB::select('SELECT count(id) as cntdevis FROM `devis` WHERE  `deleted_at` is null ');
+        $atentecommande  =  DB::select('SELECT count(id) as cntdevis FROM `devis` WHERE  `deleted_at` is null ');
         $cotationqttend  =  DB::select('SELECT count(id) as cntdevis FROM `devis` WHERE `status` = 1  and `deleted_at` is null ');
         $cotationsoumis  =  DB::select('SELECT count(id) as cntdevis FROM `devis` WHERE   `status` = 2  and  `deleted_at` is null ');
         $cotationtraiter  =  DB::select('SELECT count(id) as cntdevis FROM `devis` WHERE  `status` = 3  and  `deleted_at` is null ');
         $cotationcloturer  =  DB::select('SELECT count(id) as cntdevis FROM `devis` WHERE  `status` = 4  and  `deleted_at` is null ');
         $commande  =  DB::select('SELECT count(id) as cntdevis FROM `commandes` WHERE  `deleted_at` is null ');
         $marchandises  =  DB::select('SELECT count(id) as cntdevis FROM `marchandises` WHERE  `deleted_at` is null ');
-        return view('welcome', compact('cotationtotal', 'cotationqttend', 'cotationsoumis', 'cotationtraiter', 'cotationcloturer', 'commande', 'marchandises'));
+        $paiement  =  DB::select('SELECT count(id) as cntpaiement FROM `paiements` WHERE  `deleted_at` is null ');
+        $marchandise_famille =  DB::select("SELECT * FROM marchandises GROUP BY `marchandises`.`id_famille`limit 3 ");
+
+        return view('welcome', compact('cotationtotal', 'paiement', 'marchandise_famille', 'cotationqttend', 'cotationsoumis', 'cotationtraiter', 'cotationcloturer', 'commande', 'marchandises'));
     }
     public function devis()
     {
@@ -114,6 +119,7 @@ class homecontroller extends Controller
             'metrecube' => $metrecube,
             'id_famille' => $id_famille,
             'description' => $description,
+            'id_type' => $intituler,
             'prix_souhaite' => $prix,
             'created_at' => $date,
             'status' => 1,
@@ -189,6 +195,7 @@ class homecontroller extends Controller
             'quantite' => $quantite,
             'created_at' => $date,
             'status' => 1,
+            'status' => 1,
             'id_devis' => $id,
         ]);
 
@@ -204,6 +211,7 @@ class homecontroller extends Controller
         $prix = request('prix');
         $datebl = request('datee');
         $idevis = request('idevis');
+        $fournisseur = request('fournisseur');
 
         $date = now();
         $id_last = DB::table('commandes')->insertGetId([
@@ -211,6 +219,7 @@ class homecontroller extends Controller
             'bl' => $bl,
             'nom_client' => $client,
             'prix_convenu' => $prix,
+            'id_fournisseur' => $fournisseur,
             'date_bl' => $datebl,
             'created_at' => $date,
             'status' => '1',
@@ -228,6 +237,7 @@ class homecontroller extends Controller
                 'cubage' => $row->metrecube,
                 'prix_unitaire' => $row->prix_souhaite,
                 'description' => $row->description,
+                'id_type' => $row->id_type,
                 'id_famille' => $row->id_famille,
                 'created_at' => $date,
                 'status' => '1',
@@ -273,23 +283,35 @@ class homecontroller extends Controller
 
         return view('commande', compact('chauffeurs', 'sumdebours', 'commande', 'vehicules', 'devis', 'sumcommande', 'marchandises', 'paiements', 'waybills', 'document', 'debours', 'summontant_paye', 'marchandise', 'type_debours'));
     }
+    public function fournisseurs()
+    {
+        $fournisseurs =  DB::select("SELECT * FROM `founisseurs`,`commandes`where `founisseurs`.`id`=`commandes`.`id_fournisseur`;
+        ");
+        return view('fournisseurs', compact('fournisseurs'));
+    }
     public function ajoutpaiement(Request $request)
     {
+
         $idcommande = request('idcommande');
+        $montant_total = request('montant_total');
         $montant = request('montant');
         $date = request('date');
         $compte = request('compte');
         $now = now();
         // dd($date);
-        DB::table('paiements')->insert([
-            'montant_paye' => $montant,
-            'date_paiement' => $date,
-            'numero_compte' => $compte,
-            'id_commande' => $idcommande,
-            'created_at' => $now,
-        ]);
+        if ($montant  <= $montant_total) {
+            DB::table('paiements')->insert([
+                'montant_paye' => $montant,
+                'date_paiement' => $date,
+                'numero_compte' => $compte,
+                'id_commande' => $idcommande,
+                'created_at' => $now,
+            ]);
+            return redirect("/commandes/$idcommande");
+        } else {
 
-        return redirect("/commandes/$idcommande");
+            return redirect("/commandes/$idcommande")->with('success', "Vous ne pouvez pas effectuer ce paiement. le montant restant est : <b> $montant_total $ </b>");
+        }
     }
     public function ajoutdocument(Request $request)
     {
@@ -377,11 +399,13 @@ class homecontroller extends Controller
         $marchandises =  DB::select("SELECT * FROM `marchandises` WHERE  id =  $idmarchandises ");
         foreach ($marchandises as $row) {
             $cutot = $row->waybill_cubage;
+            $cutoq = $row->waybill_quantite;
         }
         $waybills =  DB::select("SELECT * FROM `waybills` WHERE  id =  $idwaybill ");
         $test = $metrecube + $cutot;
+        $testq = $quantite + $cutoq;
         DB::table('marchandises')->where('id_commande', $idcommandee)->update(array(
-            'waybill_quantite' => $quantite,
+            'waybill_quantite' => $testq,
             'waybill_cubage' => $test,
         ));
         $qrcode = base64_encode(QrCode::format('svg')->size(300)

@@ -228,7 +228,7 @@
                         </a>
                     </li>
                     <li class="nav-item theme-text">
-                        <a href="index.html" class="nav-link"> I&E transit </a>
+                        <a href="index.html" class="nav-link"> D-Import & Export - Dheeman Group </a>
                     </li>
                 </ul>
 
@@ -248,12 +248,12 @@
                         <a href="{{url('/devis')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                <span>Cotation</span>
+                                <span>Pre-Order</span>
                             </div>
                         </a>
                       
                     </li>
-                     <li class="menu single-menu ">
+                    <li class="menu single-menu ">
                         <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -262,11 +262,21 @@
                         </a>
                       
                     </li> 
-                    
-                    <li class="menu single-menu active ">
-                        <a href="{{url('/stock')}}" class="dropdown-toggle">
+                    <li class="menu single-menu ">
+                        <a href="{{url('/fournisseur/commandes')}}" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                                <span>Stock</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                <span>Fournisseur</span>
+                            </div>
+                        </a>
+                      
+                    </li> 
+                    
+                    <li class="menu single-menu active">
+                        <a href="/stock" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>                     
+                                           <span>Stock</span>
                             </div>
                         </a>
                       
@@ -280,6 +290,8 @@
                         </a>
                       
                     </li> 
+                    
+              
 
                     <li class="menu single-menu">
                         <a href="#more" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -291,10 +303,19 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="more" data-parent="#topAccordion">
                             <li>
-                                <a href="dragndrop_dragula.html"> Fournisseurs</a>
+                                <a href="{{url('/paramettre/fournisseur')}}"> Fournisseurs</a>
                             </li>
                             <li>
-                                <a href="widgets.html"> Vehicules </a>
+                                <a href="{{url('/paramettre/famille')}}"> Familles Articles </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/article')}}"> Articles </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/chauffeurs')}}"> Chauffeurs </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/paramettre/vehicules')}}"> Vehicule </a>
                             </li>
                            
                         </ul>

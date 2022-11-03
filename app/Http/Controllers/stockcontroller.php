@@ -20,7 +20,7 @@ class stockcontroller extends Controller
     }
     public function famille($id)
     {
-        $stock =  DB::select("SELECT  `marchandises`.`intituler`,`marchandises`.`cubage`,`commandes`.`nom_fourniseur`,`marchandises`.`prix_unitaire`,`marchandises`.`id_commande`,`marchandises`.`status`,`marchandises`.`created_at`  FROM `marchandises`,commandes where `marchandises`.`id_type` = $id and `marchandises`.id_commande = commandes.id  ");
+        $stock =  DB::select("SELECT  `marchandises`.`intituler`,`marchandises`.`waybill_cubage`,`marchandises`.`cubage`,`commandes`.`nom_fourniseur`,`marchandises`.`prix_unitaire`,`marchandises`.`id_commande`,`marchandises`.`status`,`marchandises`.`created_at`  FROM `marchandises`,commandes where `marchandises`.`id_type` = $id and `marchandises`.id_commande = commandes.id  ");
 
         return view('stock.familly', compact('stock'));
     }

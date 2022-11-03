@@ -20,6 +20,7 @@
     <link href="{{asset('template/plugins/flatpickr/flatpickr.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template/plugins/noUiSlider/nouislider.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template/assets/css/tables/table-basic.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('template/assets/css/elements/alert.css')}}">
 
     <!-- END PAGE LEVEL PLUGINS -->
    
@@ -427,7 +428,13 @@
                                 
                                 <h3 class="">Bill of lading :@foreach ($commande as $row) <b>{{$row->bl}}</b>  @endforeach
                                 </h3>  
-                                                        
+                                @if (\Session::has('success'))
+                                <div class="alert alert-arrow-left alert-icon-left alert-light-danger mb-4" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                    <strong>Erreur! Paiement</strong>{!! \Session::get('success') !!} 
+                                </div> 
+                                @endif                        
                             <p>  <b>Fournisseur </b> :  {{$row->nom_fourniseur}}
                             <p>  <b>Date BL </b> :  {{$row->date_bl}} -- <b>Client </b> :  {{$row->nom_client}}
                            <br>          @foreach ($devis as $row)
@@ -444,16 +451,19 @@
                                 @endphp 
                                 {{$row->summontant_paye}} $
                                 <br>@endforeach
+                           <font color="red">     <b>@php $rest = $montanttotal - $montantpayer  @endphp Montant Restant  : {{$rest}} $
+                           </b>  </font>
                                 <b> <br> Total Debours :  </b> @foreach ($sumdebours as $row)
                                     <b>{{$row->sumprix}} </b> Djf  <b>@php
                                         $tot = $row->sumprix/177.75; 
-                                        echo round($tot,2);
+                                        $totdebourdsss =  round($tot,2);
+                                        echo $totdebourdsss;
                                     @endphp
                                     </b>
                                     $
                                 @endforeach
-                                <br>
-                                <b>@php $rest = $montanttotal - $montantpayer  @endphp Montant Restant </b> : {{$rest}} $
+                                <br> <b>@php $resttot = $montanttotal + $totdebourdsss  @endphp Charge Total : {{$resttot}} $</b>
+                              
                                 <br>
                                 </p>
                                 <p>
@@ -473,7 +483,7 @@
                                     </div>
                                 </div>
                                
-                   
+                             
                                 <div class="widget-content widget-content-area rounded-pills-icon">
                                     
                                     <ul class="nav nav-pills mb-4 mt-3  justify-content-center" id="rounded-pills-icon-tab" role="tablist">
@@ -774,6 +784,7 @@
                         
                     <form method="POST" action="{{url('/ajout/paiement')}}">
                         @csrf
+                        <input type="hidden" name="montant_total" value="{{$rest}}">
                         <div class="form-group mb-4">
                             <label for="exampleFormControlInput2">Montant en $</label>
                             <input type="number" name="montant" class="form-control" id="exampleFormControlInput2" placeholder="..... $" required>

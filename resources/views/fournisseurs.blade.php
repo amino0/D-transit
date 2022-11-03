@@ -253,7 +253,7 @@
                         </a>
                       
                     </li>
-                    <li class="menu single-menu ">
+                    <li class="menu single-menu  ">
                         <a href="{{url('/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -262,7 +262,7 @@
                         </a>
                       
                     </li> 
-                    <li class="menu single-menu ">
+                    <li class="menu single-menu active ">
                         <a href="{{url('/fournisseur/commandes')}}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -293,7 +293,7 @@
                     
               
 
-                    <li class="menu single-menu active">
+                    <li class="menu single-menu">
                         <a href="#more" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
@@ -335,41 +335,46 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Liste des types d'article </h4>
+                                        <h4>Liste des Commandes </h4>
                                     </div>
                                 </div>
                             </div>
-                           
                             <div class="widget-content widget-content-area">
-                            <div style="float: right">    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajoutfournissuer">
-                                    Ajout d'un article
-    
-                                 </button>
-                                </div>
                                 <div class="table-responsive mb-4">
                                     <table id="style-2" class="table style-2  table-hover">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th>Nom </th>
-                                                <th>Cree le </th>
+                                                <th class="checkbox-column"> Record </th>
+                                                <th>Bill of lading </th>
+                                                <th>Num Cotation </th>
+                                                <th>Fournisseur </th>
+                                                <th class="text-center">Statut</th>
+                                                <th>Créée le</th>
                                                 
-                                                <th class="text-center">Famille</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($fournisseurs as $row)
+                                                
                                             
-                                            @foreach ($allarticle as $row)
-                                          <tr>
-                                                <td></td>
-                                                <td>{{$row->ds_type_article}}</td>
-                                                <td>{{$row->created_at}}</td>
-                                                <td class="text-center">{{$row->id_famille}}</td>
-                                               
-                                            
-                                            </tr>
+                                            <tr>
+                                                <td class="checkbox-column"> {{$row->id}} </td>
+                                                <td>{{$row->nom_fournisseurs}}</td>
+                                                <td>{{$row->telephone}}</td>
+                                                <td> 
+                                                    {{$row->addresse}}
+                                                </td>
+                                                <td>@if ($row->status == 1 )
+                                                    <span class=' shadow-none badge outline-badge-success'>Active </span>
                                                    
-                                             @endforeach         
+                                                    @endif</td>
+                                                <td>{{$row->created_at}}</td>
+                                                
+                                                <td class="text-center">
+                                                    <a href="{{url("/commandes/$row->id")}}" class="btn btn-outline-primary"  >Voir</a></td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -378,50 +383,7 @@
                     </div>
                 </div>
 
-                 <!-- Modal paiement  -->
-           <div class="modal fade" id="ajoutfournissuer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ajout d'un article</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        
-                    <form method="POST" action="{{url('/paramettre/article/add')}}">
-                        @csrf
-                        <div class="form-group mb-4">
-                            <label for="exampleFormControlInput2">Nom de l'article</label>
-                            <input type="text" name="nom_article" class="form-control" id="exampleFormControlInput2" placeholder="nom de l'article" required>
-                        </div>
-                        <div class="form-group mb-4">
-                        <label for="exampleFormControlSelect1">Famille </label>
-                            
-                        <select name="id_famille" class="form-control  basic">
-                          
-                            @foreach ($familles as $row)
-                            <option value="{{$row->id}}" >{{$row->nom_famille}} </option>
-                            @endforeach
-                         
-                          </select>
-                    </div>
-                        
-                        
-
-                        
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annule</button>
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                    </div>
-                </form>
-                </div>
-            </div>
-        </div>     
-        <!-- End Modal paiement  -->
+                
                
                 </div>
         <div class="footer-wrapper">

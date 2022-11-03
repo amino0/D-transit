@@ -41,8 +41,9 @@ Route::post('/ajouter/arrete/article/', [homecontroller::class, 'addarticle_ar']
 Route::get('/soumettre/devis/{id}', [homecontroller::class, 'soummetre_devis']);
 Route::get('/telecharger/devis/{id}', [homecontroller::class, 'soummetre_devis']);
 Route::get('/devis/arrete/{id}', [homecontroller::class, 'arrete']);
-Route::post('/confirmer/devis', [homecontroller::class, 'commandes']);
+//Route::post('/confirmer/devis', [homecontroller::class, 'commandes']);
 Route::post('/confirmer/devis', [homecontroller::class, 'confirmer_devis']);
+Route::get('/fournisseur/commandes', [homecontroller::class, 'fournisseurs']);
 
 // commandes 
 
